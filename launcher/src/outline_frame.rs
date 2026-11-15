@@ -5,8 +5,9 @@ use super::*;
 use crate::glass_ui::{self as ui, mono, white};
 use horizon_theme::glass::{fill, ink, radius};
 
-/// The brand's width: the 22 px mark, 10 px, then "Horizon" at 17 px bold.
+/// The brand's width: the 22 px mark, 10 px, then "Horizon" at 17 px bold; the mark alone.
 const BRAND: f32 = 130.;
+const MARK: f32 = 22.;
 
 /// How wide `text` is drawn, so the bar fits each part in the language shown.
 fn line_width(window: &Window, family: &str, weight: FontWeight, size: f32, text: &str) -> f32 {
@@ -32,13 +33,6 @@ fn line_width(window: &Window, family: &str, weight: FontWeight, size: f32, text
 impl Launcher {
     pub(super) fn outline_topbar(&mut self, window: &Window, cx: &mut Context<Self>) -> Div {
         let t = self.theme;
-        let brand = div()
-            .flex()
-            .flex_none()
-            .items_center()
-            .gap(px(10.))
-            .child(self.horizon_mark(22.))
-            .child(ui::text(17., FontWeight::BOLD, ink::FULL).child("Horizon"));
 
         let tight = self.window_width < 1280.;
         let (tab_size, tab_gap) = if tight { (14., 14.) } else { (15., 22.) };
@@ -137,8 +131,31 @@ impl Launcher {
         let count = count_width.is_some() && room - right_of(true, false) >= tabs;
         let short = !signed_in && room - right_of(false, false) < tabs;
         let right = right_of(count, short);
+        // Narrower still, the brand gives way to the pages: its word, then its mark.
+        let fits = |brand: f32| self.window_width - side - 48. - brand - 48. - right >= tabs;
+        let (word, mark) = if fits(BRAND) {
+            (true, true)
+        } else {
+            (false, fits(MARK))
+        };
+        let brand_width = match (word, mark) {
+            (true, _) => BRAND,
+            (false, true) => MARK,
+            _ => -24.,
+        };
+        let brand = mark.then(|| {
+            div()
+                .flex()
+                .flex_none()
+                .items_center()
+                .gap(px(10.))
+                .child(self.horizon_mark(22.))
+                .when(word, |d| {
+                    d.child(ui::text(17., FontWeight::BOLD, ink::FULL).child("Horizon"))
+                })
+        });
         let half = self.window_width / 2.;
-        let centred = half - tabs / 2. >= side + 24. + BRAND + 16.
+        let centred = half - tabs / 2. >= side + 24. + brand_width + 16.
             && half + tabs / 2. <= self.window_width - 24. - right - 16.;
         let (pages_layer, pages_flow) = if centred {
             (Some(pages.flex_none()), None)
@@ -272,7 +289,7 @@ impl Launcher {
                     .justify_center()
                     .child(pages)
             }))
-            .child(brand)
+            .children(brand)
             .child(
                 div()
                     .id("nav-pages")
