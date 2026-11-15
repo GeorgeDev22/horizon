@@ -2030,11 +2030,9 @@ impl Launcher {
         self.begin_sign_in(None);
     }
 
-    /// The top bar's sign-in: its code, progress and problems show on Settings' Account card.
+    /// The top bar's sign-in: the sign-in sheet, its code and progress on it.
     fn sign_in_from_topbar(&mut self) {
-        self.start_sign_in();
-        self.go(Page::Settings);
-        self.settings_pane.scroll_to_top_of_item(0);
+        self.sign_in_to_play();
     }
 
     fn re_sign_in(&mut self, uuid: &str) {

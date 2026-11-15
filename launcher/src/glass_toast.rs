@@ -49,6 +49,11 @@ pub(super) fn say_with(en: &str, value: &str) {
     say_parts(parts);
 }
 
+/// Lets the line go now: a click on the toast.
+fn dismiss() {
+    *LINE.lock().unwrap_or_else(|e| e.into_inner()) = None;
+}
+
 /// The line still showing, and its number.
 fn current_parts() -> Option<(Parts, u64)> {
     let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
@@ -161,7 +166,11 @@ impl Launcher {
                 .flex()
                 .justify_end()
                 .child(
+                    // Under the pointer it's edged brighter and takes the hover from the page
+                    // under it; a click lets it go.
                     div()
+                        .id("toast")
+                        .occlude()
                         .relative()
                         .flex()
                         .items_center()
@@ -172,7 +181,13 @@ impl Launcher {
                         .bg(ui::color(horizon_theme::glass::SCRIM))
                         .border_1()
                         .border_color(ui::line())
+                        .hover(|s| s.border_color(white(0.4)))
+                        .cursor_pointer()
                         .shadow_lg()
+                        .on_click(|_, window, _| {
+                            dismiss();
+                            window.refresh();
+                        })
                         .child(ui::icon("tick-02", 16., ui::color(ui::look().accent)).flex_none())
                         .child(line)
                         .with_animation(
