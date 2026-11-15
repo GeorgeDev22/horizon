@@ -374,17 +374,21 @@ impl Launcher {
             Some(actions.into_any_element()),
             &t,
         ));
+        let inset = glass_ui::flat();
         div()
             .flex()
             .flex_col()
             .gap(px(16.))
+            // The glass card's rows sit 16 px in: its words line up with them.
             .child(
                 text(theme::HEADING)
+                    .when(inset, |d| d.px(px(16.)).pt(px(16.)))
                     .text_color(t.ink)
                     .child(tr("Data collection")),
             )
             .child(
                 text(theme::UI)
+                    .when(inset, |d| d.px(px(16.)))
                     .max_w(px(600.))
                     .text_color(t.muted)
                     .child(tr(
@@ -394,6 +398,7 @@ impl Launcher {
             .child(list)
             .child(
                 text(theme::CAPTION)
+                    .when(inset, |d| d.px(px(16.)))
                     .max_w(px(600.))
                     .text_color(t.muted)
                     .child(tr(telemetry::NEVER)),
@@ -402,7 +407,12 @@ impl Launcher {
                 self.collection
                     .note
                     .clone()
-                    .map(|n| text(theme::UI).text_color(t.ink).child(n)),
+                    .map(|n| {
+                        text(theme::UI)
+                            .when(inset, |d| d.px(px(16.)))
+                            .text_color(t.ink)
+                            .child(n)
+                    }),
             )
             .children(
                 self.collection

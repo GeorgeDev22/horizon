@@ -204,6 +204,7 @@ impl Launcher {
         let mut body = div()
             .flex()
             .flex_col()
+            .min_w_0()
             .gap(px(8.))
             .child(index_row(
                 n,
@@ -223,19 +224,28 @@ impl Launcher {
                 ),
                 &t,
             ))
-            .child(text(theme::CAPTION).text_color(t.muted).child(tr(
-                "Moves all launcher, game and build data, including settings, worlds, instances and installed versions. Choose an empty folder with enough free space.",
-            ).to_string()))
-            .child(text(theme::CAPTION).text_color(t.muted).child(tr(
-                "The launcher closes while your data is copied and verified, then reopens. Old folders are kept and still use disk space until you verify the move and remove them yourself.",
-            ).to_string()))
-            .children(blocked.map(|message| text(theme::CAPTION).text_color(t.warn).child(message)))
-            .children(self.location_note.as_ref().map(|message| {
-                text(theme::CAPTION).text_color(t.ink).child(message.clone())
-            }))
-            .children(self.location_error.as_ref().map(|message| {
-                text(theme::CAPTION).text_color(t.danger).child(message.clone())
-            }));
+            // Under the row, in line with its title and wrapped inside the card.
+            .child(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(8.))
+                    .min_w_0()
+                    .when(glass_ui::flat(), |d| d.px(px(16.)).pb(px(8.)))
+                    .child(text(theme::CAPTION).text_color(t.muted).child(tr(
+                        "Moves all launcher, game and build data, including settings, worlds, instances and installed versions. Choose an empty folder with enough free space.",
+                    ).to_string()))
+                    .child(text(theme::CAPTION).text_color(t.muted).child(tr(
+                        "The launcher closes while your data is copied and verified, then reopens. Old folders are kept and still use disk space until you verify the move and remove them yourself.",
+                    ).to_string()))
+                    .children(blocked.map(|message| text(theme::CAPTION).text_color(t.warn).child(message)))
+                    .children(self.location_note.as_ref().map(|message| {
+                        text(theme::CAPTION).text_color(t.ink).child(message.clone())
+                    }))
+                    .children(self.location_error.as_ref().map(|message| {
+                        text(theme::CAPTION).text_color(t.danger).child(message.clone())
+                    })),
+            );
         if horizon_launcher::data_location::startup_error().is_some() {
             body = body.child(
                 div()
