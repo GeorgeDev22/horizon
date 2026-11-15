@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "În ultima compilare, pe Horizon {commit} pentru {mods}, nu pe {horizon}",
   "In the last build, on {horizon}": "În ultima compilare, pe {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Continuă de unde ai rămas",
+  "All worlds": "Toate lumile",
+  "None yet.": "Încă niciuna.",
+  "Outline look": "Aspect contur",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Colțuri drepte, panouri plate și o pagină Acasă centrată. Doar pentru aspectul întunecat.",
+  "Last played {when}": "Ultima dată jucată {when}",
+  "Sign in": "Conectați-vă"
 }

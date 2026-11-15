@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "ໃນການສ້າງຫຼ້າສຸດ, ໃນ Horizon {commit} ສຳລັບ {mods}, ບໍ່ແມ່ນໃນ {horizon}",
   "In the last build, on {horizon}": "ໃນການສ້າງຫຼ້າສຸດ, ໃນ {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "ຫຼິ້ນຕໍ່",
+  "All worlds": "ໂລກທັງໝົດ",
+  "None yet.": "ຍັງບໍ່ມີ.",
+  "Outline look": "ຮູບແບບເສັ້ນຂອບ",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "ມຸມສີ່ຫຼ່ຽມ, ແຜງແບນ ແລະ ໜ້າຫຼັກຢູ່ກາງ. ສະເພາະຮູບແບບມືດ.",
+  "Last played {when}": "ຫຼິ້ນຄັ້ງສຸດທ້າຍ {when}",
+  "Sign in": "ເຂົ້າສູ່ລະບົບ"
 }

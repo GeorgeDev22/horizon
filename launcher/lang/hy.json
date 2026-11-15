@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Վերջին կառուցման մեջ՝ Horizon {commit}-ի վրա {mods}-ի համար, ոչ {horizon}-ի վրա",
   "In the last build, on {horizon}": "Վերջին կառուցման մեջ՝ {horizon}-ի վրա",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Շարունակել",
+  "All worlds": "Բոլոր աշխարհները",
+  "None yet.": "Դեռ չկա։",
+  "Outline look": "Ուրվագծային տեսք",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Քառակուսի անկյուններ, հարթ վահանակներ և կենտրոնացված Գլխավոր էջ։ Միայն մուգ տեսքով։",
+  "Last played {when}": "Վերջին խաղը {when}",
+  "Sign in": "Մուտք գործել"
 }

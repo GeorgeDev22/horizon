@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "ბოლო აგებაში, Horizon {commit}-ზე {mods}-ის გამო, არა {horizon}-ზე",
   "In the last build, on {horizon}": "ბოლო აგებაში, {horizon}-ზე",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "გაგრძელება",
+  "All worlds": "ყველა სამყარო",
+  "None yet.": "ჯერ არ არის.",
+  "Outline look": "კონტურის იერსახე",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "კვადრატული კუთხეები, ბრტყელი პანელები და ცენტრში მთავარი გვერდი. მხოლოდ მუქი იერსახით.",
+  "Last played {when}": "ბოლოს ითამაშა {when}",
+  "Sign in": "შესვლა"
 }

@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "U zadnjoj izgradnji, na Horizonu {commit} zbog {mods}, ne na {horizon}",
   "In the last build, on {horizon}": "U zadnjoj izgradnji, na {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Nastavi gdje si stao",
+  "All worlds": "Svi svjetovi",
+  "None yet.": "Još nema.",
+  "Outline look": "Obrisni izgled",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kvadratni kutovi, ravne ploče i centrirana Početna. Samo tamni izgled.",
+  "Last played {when}": "Posljednji put igrano {when}",
+  "Sign in": "Prijavi se"
 }

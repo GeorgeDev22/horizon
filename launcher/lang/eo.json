@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "En la lasta konstruo, sur Horizon {commit} por {mods}, ne sur {horizon}",
   "In the last build, on {horizon}": "En la lasta konstruo, sur {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Daŭrigu",
+  "All worlds": "Ĉiuj mondoj",
+  "None yet.": "Ankoraŭ neniu.",
+  "Outline look": "Kontura aspekto",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kvadrataj anguloj, plataj paneloj kaj centrita Hejmo. Nur malhela aspekto.",
+  "Last played {when}": "Laste ludita {when}",
+  "Sign in": "Ensalutu"
 }

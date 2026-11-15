@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "V poslednom zostavení na Horizone {commit} kvôli {mods}, nie na {horizon}",
   "In the last build, on {horizon}": "V poslednom zostavení na {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Pokračovať",
+  "All worlds": "Všetky svety",
+  "None yet.": "Zatiaľ žiadne.",
+  "Outline look": "Obrysový vzhľad",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Hranaté rohy, ploché panely a vycentrovaná Domovská stránka. Iba v tmavom vzhľade.",
+  "Last played {when}": "Naposledy hrané {when}",
+  "Sign in": "Prihlásiť sa"
 }

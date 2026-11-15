@@ -135,7 +135,7 @@ impl Launcher {
     /// The edition tabs (`Tabs`, size `sm`): the instance's own lit. An instance's edition is
     /// chosen when it is made, so the other tab goes to an instance of that edition
     /// ([`Self::switch_edition`]).
-    fn edition_tabs(&mut self, java: bool, cx: &mut Context<Self>) -> Div {
+    pub(super) fn edition_tabs(&mut self, java: bool, cx: &mut Context<Self>) -> Div {
         let grass = self.grass_mark(18.);
         let horizon = self.horizon_mark(18.);
         let tab = |label: &'static str, icon: AnyElement, open: bool| {
@@ -147,7 +147,7 @@ impl Launcher {
                 .gap(px(6.))
                 .h(px(32.))
                 .px(px(12.))
-                .rounded(px(radius::CONTROL))
+                .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                 .font_family(horizon_theme::glass::FONT)
                 .text_size(px(13.))
                 .line_height(px(18.))
@@ -305,7 +305,7 @@ impl Launcher {
 
     /// Play and its ⋯ menu (`PlayGroup`): Stop while the game runs, Update when the launcher's
     /// version has a newer one, the progress while preparing, updating or starting.
-    fn play_group(&mut self, tag: &str, ready: bool, cx: &mut Context<Self>) -> Div {
+    pub(super) fn play_group(&mut self, tag: &str, ready: bool, cx: &mut Context<Self>) -> Div {
         let t = self.theme;
         let accent = ui::color(self.look.accent);
         let running = self.client.is_some();
@@ -359,7 +359,7 @@ impl Launcher {
             .items_center()
             .justify_center()
             .size(px(40.))
-            .rounded(px(radius::CONTROL))
+            .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
             .cursor_pointer()
             .when(open, |d| d.bg(gpui::black().opacity(0.2)))
             .hover(|s| s.bg(gpui::black().opacity(0.2)))
@@ -386,7 +386,7 @@ impl Launcher {
             }))
             .h(px(TALL))
             .overflow_hidden()
-            .rounded(px(radius::LARGE));
+            .rounded(px(crate::glass_ui::rad(radius::LARGE)));
         let body = |label: SharedString, icon: &'static str| {
             div()
                 .flex()
@@ -586,7 +586,7 @@ impl Launcher {
 
     /// The version (`VersionPicker`): "Version" over the one played, a chevron that turns while
     /// its list is open; the list ticks the one played and ends with Manage versions.
-    fn glass_picker(&self, cx: &mut Context<Self>) -> Div {
+    pub(super) fn glass_picker(&self, cx: &mut Context<Self>) -> Div {
         let t = self.theme;
         let soft = self.look.accent_soft;
         let label = self.selected().map_or_else(
@@ -618,7 +618,7 @@ impl Launcher {
                     170.
                 }))
                 .px(px(16.))
-                .rounded(px(radius::LARGE))
+                .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                 .bg(white(fill::BUTTON))
                 .hover(|s| s.bg(white(fill::ACTIVE)))
                 .cursor_pointer()
@@ -726,32 +726,40 @@ impl Launcher {
 
     /// The folder button and its ⋯ (`FolderGroup`), which shows under the pointer or while its
     /// menu is open: the instance's folder, its screenshots, and (Horizon) the Minecraft folder.
-    fn folder_group(&self, horizon: bool, cx: &mut Context<Self>) -> Option<Div> {
+    pub(super) fn folder_group(&self, horizon: bool, cx: &mut Context<Self>) -> Option<Div> {
         let t = self.theme;
         let instance = self.selected_instance()?;
         let home = instance.home.clone();
         let open = self.home_menu == HomeMenu::Folder;
         let opener = home.clone();
+        let shown = open || self.folder_hovered || self.folder_more_hovered;
         let more = div()
             .id("folder-more")
+            .absolute()
+            .top_0()
+            .left(px(TALL))
+            .h(px(TALL))
             .flex()
-            .flex_none()
             .items_center()
-            .justify_center()
-            .h(px(40.))
-            .w(px(36.))
-            .mr(px(8.))
-            .rounded(px(radius::CONTROL))
-            .cursor_pointer()
-            .when(open, |d| {
-                d.w(px(36.))
-                    .mr(px(8.))
-                    .opacity(1.)
-                    .bg(white(fill::SELECTED))
-            })
-            .group_hover("folder-group", |s| s.w(px(36.)).mr(px(8.)).opacity(1.))
-            .hover(|s| s.bg(white(fill::SELECTED)))
-            .child(ui::icon("more-horizontal", 20., white(ink::STRONG)))
+            .pr(px(8.))
+            .on_hover(cx.listener(|this, hovered: &bool, _, cx| {
+                this.folder_more_hovered = *hovered;
+                cx.notify();
+            }))
+            .child(
+                div()
+                    .id("folder-more-button")
+                    .flex()
+                    .items_center()
+                    .justify_center()
+                    .h(px(40.))
+                    .w(px(36.))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
+                    .cursor_pointer()
+                    .when(open, |d| d.bg(white(fill::SELECTED)))
+                    .hover(|s| s.bg(white(fill::SELECTED)))
+                    .child(ui::icon("more-horizontal", 20., white(ink::STRONG))),
+            )
             .on_click(cx.listener(|this, event: &ClickEvent, _, cx| {
                 if !this.closed_by_this_press(event) {
                     this.home_menu = match this.home_menu {
@@ -761,14 +769,22 @@ impl Launcher {
                 }
                 cx.notify();
             }));
+        // The ⋯ slides out over the space to the right, so the row it sits in doesn't move.
+        let backing = div()
+            .absolute()
+            .top_0()
+            .left_0()
+            .h(px(TALL))
+            .w(px(if shown { TALL + 44. } else { TALL }))
+            .rounded(px(crate::glass_ui::rad(radius::LARGE)))
+            .bg(white(if shown { fill::ACTIVE } else { fill::BUTTON }));
         let group = div()
             .id("folder-group")
+            .relative()
             .flex()
             .items_center()
-            .h(px(TALL))
-            .rounded(px(radius::LARGE))
-            .bg(white(fill::BUTTON))
-            .hover(|s| s.bg(white(fill::ACTIVE)))
+            .size(px(TALL))
+            .child(backing)
             .child(
                 div()
                     .id("home-folder")
@@ -783,7 +799,7 @@ impl Launcher {
                         crate::glass_toast::open(cx, &opener);
                     }),
             )
-            .when(open || self.folder_hovered, |d| d.child(more))
+            .when(shown, |d| d.child(more))
             .on_hover(cx.listener(|this, hovered: &bool, _, cx| {
                 this.folder_hovered = *hovered;
                 cx.notify();
@@ -869,7 +885,7 @@ impl Launcher {
 
     /// The invite code field (`JoinFriend`): 340 wide (`wide`), else what its row leaves, with a
     /// shorter placeholder; the icon inside on the left, Join inside on the right.
-    fn glass_join_friend(&self, tag: &str, wide: bool, cx: &mut Context<Self>) -> Div {
+    pub(super) fn glass_join_friend(&self, tag: &str, wide: bool, cx: &mut Context<Self>) -> Div {
         let t = self.theme;
         let focused = self.friend_focused;
         let join_label = tr("Join");
@@ -882,7 +898,7 @@ impl Launcher {
             .size_full()
             .pl(px(48.))
             .pr(px(pr))
-            .rounded(px(radius::LARGE))
+            .rounded(px(crate::glass_ui::rad(radius::LARGE)))
             .bg(white(if focused { 0.09 } else { 0.06 }))
             .font_family(horizon_theme::glass::FONT)
             .text_size(px(14.))

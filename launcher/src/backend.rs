@@ -4485,6 +4485,9 @@ pub struct Settings {
     /// following the mouse less often and resizes baked in the background). Unset is off.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub performance: Option<bool>,
+    /// The Outline look over the glass one (`glass_ui::outline`). Unset is off.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub outline: Option<bool>,
     /// Home's background: a picture the player picked, kept in the data folder under this name
     /// (`themes::keep_background`). Unset shows Horizon's landscape.
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -4592,6 +4595,14 @@ impl Settings {
     /// Whether the cheaper scene is on ([`performance`](Self::performance)).
     pub fn performance(&self) -> bool {
         self.performance.unwrap_or(false)
+    }
+    /// Whether the Outline look is on: the setting, or `HORIZON_LAUNCHER_LOOK=outline`.
+    pub fn outline(&self) -> bool {
+        match std::env::var("HORIZON_LAUNCHER_LOOK").as_deref() {
+            Ok("outline") => true,
+            Ok("glass") => false,
+            _ => self.outline.unwrap_or(false),
+        }
     }
     /// Registry mods update by themselves ([`Settings::mods_auto_update`]): on unless turned off.
     pub fn auto_updates_mods(&self) -> bool {

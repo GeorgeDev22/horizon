@@ -3,7 +3,7 @@
 //! pages in a glass tab strip, the player, Microsoft sign-in and Settings; and the menus they open.
 //! Dark appearance only for now (`docs/design-system.md`, "Glass").
 use super::*;
-use crate::glass_ui::{self as ui, white, Tone};
+use crate::glass_ui::{self as ui, mono, white, Tone};
 use crate::instances_page::java_line;
 use gpui::{anchored, canvas, deferred, point};
 use horizon_launcher::instances::{Icon, Instance, Kind as InstanceKind};
@@ -97,7 +97,7 @@ impl Launcher {
 
     /// A sidebar row's state line and its dot (the mockup's `statusOf`), from what the launcher
     /// knows of the instance.
-    fn row_state(&self, i: &Instance) -> (Tone, String) {
+    pub(super) fn row_state(&self, i: &Instance) -> (Tone, String) {
         let running =
             self.client.is_some() && self.selected_instance().is_some_and(|s| s.id == i.id);
         if running {
@@ -219,6 +219,8 @@ impl Launcher {
                     )
                     .on_click(cx.listener(
                         move |this, event: &ClickEvent, _, cx| {
+                            // The row under the ⋮ would otherwise take the click and go to Play.
+                            cx.stop_propagation();
                             if this.closed_by_this_press(event) {
                                 return;
                             }
@@ -276,6 +278,7 @@ impl Launcher {
     pub(super) fn glass_sidebar(&mut self, window: &Window, cx: &mut Context<Self>) -> Div {
         let t = self.theme;
         let soft = self.look.accent_soft;
+        let outline = crate::glass_ui::outline();
         self.load_packs();
         let add = ui::icon_button(
             "add-instance",
@@ -298,7 +301,11 @@ impl Launcher {
             .px(px(16.))
             .pt(px(16.))
             .pb(px(8.))
-            .child(ui::text(13., FontWeight::MEDIUM, ink::NOTE).child(tr("Instances")))
+            .child(if outline {
+                mono(12., ink::NOTE).child(tr("Instances").to_uppercase())
+            } else {
+                ui::text(13., FontWeight::MEDIUM, ink::NOTE).child(tr("Instances"))
+            })
             .child(add);
         let mut list = div()
             .id("side-list")
@@ -317,7 +324,22 @@ impl Launcher {
             .sidebar_list()
             .map(<[_]>::to_vec)
             .unwrap_or_else(|| self.side_servers.clone());
-        if !servers.is_empty() {
+        if outline {
+            list = list.child(
+                mono(12., ink::NOTE)
+                    .px(px(6.))
+                    .pt(px(28.))
+                    .pb(px(6.))
+                    .child(tr("Servers").to_uppercase()),
+            );
+            if servers.is_empty() {
+                list = list.child(
+                    ui::text(13., FontWeight::NORMAL, ink::DIM)
+                        .px(px(6.))
+                        .child(tr("None yet.")),
+                );
+            }
+        } else if !servers.is_empty() {
             list = list.child(
                 ui::text(12., FontWeight::MEDIUM, ink::DIM)
                     .px(px(8.))
@@ -341,7 +363,7 @@ impl Launcher {
                             .items_center()
                             .justify_center()
                             .size(px(38.))
-                            .rounded(px(radius::CONTROL))
+                            .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                             .bg(white(fill::BUTTON))
                             .child(ui::icon("computer-terminal-01", 18., white(ink::STRONG))),
                     )
@@ -374,7 +396,7 @@ impl Launcher {
             div()
                 .flex()
                 .flex_col()
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .bg(white(fill::FIELD))
                 .p(px(14.))
                 .child(
@@ -505,94 +527,103 @@ impl Launcher {
             foot = foot.child(side);
         }
 
-        if !self.links.discord.is_empty() {
-            let url = self.links.discord.clone();
-            foot = foot.child(keyboard(
-                div()
-                    .id("discord")
-                    .flex()
-                    .items_center()
-                    .justify_center()
-                    .gap(px(10.))
-                    .mt(px(12.))
-                    // At least 40 high: a long translation wraps onto a second line, which grows the
-                    // button instead of spilling out of it.
-                    .min_h(px(40.))
-                    .px(px(12.))
-                    .py(px(8.))
-                    .rounded(px(radius::ROW))
-                    .bg(ui::color(horizon_theme::glass::DISCORD))
-                    .hover(|s| s.bg(ui::color(horizon_theme::glass::DISCORD_HOVER)))
-                    .cursor_pointer()
-                    .child(ui::icon("discord", 18., gpui::white()))
-                    .child(
-                        ui::text(14., FontWeight::SEMIBOLD, ink::FULL)
-                            .min_w_0()
-                            .text_center()
-                            .child(tr("Join the Discord")),
-                    )
-                    .on_click(move |_, _, cx| cx.open_url(&url)),
-                &t,
-            ));
-        }
-        let link = |id: &'static str, label: &'static str, icon: &'static str, url: String| {
-            let id = SharedString::from(id);
-            keyboard(
-                track_hover(
+        if outline {
+            foot = foot.child(self.outline_side_links());
+        } else {
+            if !self.links.discord.is_empty() {
+                let url = self.links.discord.clone();
+                foot = foot.child(keyboard(
                     div()
-                        .id(id.clone())
-                        .relative()
+                        .id("discord")
                         .flex()
                         .items_center()
+                        .justify_center()
                         .gap(px(10.))
-                        .h(px(36.))
-                        .px(px(8.))
-                        .rounded(px(radius::ROW))
+                        .mt(px(12.))
+                        // At least 40 high: a long translation wraps onto a second line, which grows the
+                        // button instead of spilling out of it.
+                        .min_h(px(40.))
+                        .px(px(12.))
+                        .py(px(8.))
+                        .rounded(px(crate::glass_ui::rad(radius::ROW)))
+                        .bg(ui::color(horizon_theme::glass::DISCORD))
+                        .hover(|s| s.bg(ui::color(horizon_theme::glass::DISCORD_HOVER)))
                         .cursor_pointer()
-                        .text_color(white(ink::SOFT))
-                        .hover(|s| s.text_color(white(ink::FULL)))
-                        .child(hover_layer(&id, white(fill::HOVER), radius::ROW, 0.))
-                        .child(ui::icon(icon, 17., white(ink::SOFT)).relative())
+                        .child(ui::icon("discord", 18., gpui::white()))
                         .child(
-                            div()
-                                .relative()
-                                .font_family(horizon_theme::glass::FONT)
-                                .text_size(px(14.))
-                                .child(label),
+                            ui::text(14., FontWeight::SEMIBOLD, ink::FULL)
+                                .min_w_0()
+                                .text_center()
+                                .child(tr("Join the Discord")),
                         )
                         .on_click(move |_, _, cx| cx.open_url(&url)),
-                    id,
-                ),
-                &t,
-            )
-        };
-        let mut links = div().flex().flex_col().mt(px(8.));
-        if !self.links.sponsor.is_empty() {
-            links = links.child(link(
-                "sponsor",
-                tr("Sponsor"),
-                "favourite",
-                self.links.sponsor.clone(),
-            ));
+                    &t,
+                ));
+            }
+            let link = |id: &'static str, label: &'static str, icon: &'static str, url: String| {
+                let id = SharedString::from(id);
+                keyboard(
+                    track_hover(
+                        div()
+                            .id(id.clone())
+                            .relative()
+                            .flex()
+                            .items_center()
+                            .gap(px(10.))
+                            .h(px(36.))
+                            .px(px(8.))
+                            .rounded(px(crate::glass_ui::rad(radius::ROW)))
+                            .cursor_pointer()
+                            .text_color(white(ink::SOFT))
+                            .hover(|s| s.text_color(white(ink::FULL)))
+                            .child(hover_layer(&id, white(fill::HOVER), radius::ROW, 0.))
+                            .child(ui::icon(icon, 17., white(ink::SOFT)).relative())
+                            .child(
+                                div()
+                                    .relative()
+                                    .font_family(horizon_theme::glass::FONT)
+                                    .text_size(px(14.))
+                                    .child(label),
+                            )
+                            .on_click(move |_, _, cx| cx.open_url(&url)),
+                        id,
+                    ),
+                    &t,
+                )
+            };
+            let mut links = div().flex().flex_col().mt(px(8.));
+            if !self.links.sponsor.is_empty() {
+                links = links.child(link(
+                    "sponsor",
+                    tr("Sponsor"),
+                    "favourite",
+                    self.links.sponsor.clone(),
+                ));
+            }
+            if !self.links.website.is_empty() {
+                links = links.child(link(
+                    "website",
+                    tr("Website"),
+                    "globe-02",
+                    self.links.website.clone(),
+                ));
+            }
+            foot = foot.child(links).child(
+                ui::text(12., FontWeight::NORMAL, ink::DIM)
+                    .id("launcher-version")
+                    .px(px(8.))
+                    .pt(px(8.))
+                    .child(trf("Launcher {version}", &[("version", backend::VERSION)])),
+            );
         }
-        if !self.links.website.is_empty() {
-            links = links.child(link(
-                "website",
-                tr("Website"),
-                "globe-02",
-                self.links.website.clone(),
-            ));
-        }
-        foot = foot.child(links).child(
-            ui::text(12., FontWeight::NORMAL, ink::DIM)
-                .id("launcher-version")
-                .px(px(8.))
-                .pt(px(8.))
-                .child(trf("Launcher {version}", &[("version", backend::VERSION)])),
-        );
 
-        crate::glass::plate(radius::PANEL)
-            .flex()
+        let header = header.when(outline, |d| d.px(px(16.)));
+        let side = if outline {
+            div().relative()
+        } else {
+            crate::glass::plate(radius::PANEL)
+        };
+        side.flex()
             .flex_col()
             .flex_none()
             .w(px(SIDEBAR))
@@ -650,7 +681,7 @@ impl Launcher {
                 .h(px(44.))
                 .pl(px(8.))
                 .pr(px(12.))
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .bg(white(if open { fill::ACTIVE } else { fill::ROW_HOVER }))
                 .when(!open, |d| d.hover(|s| s.bg(white(0.09))))
                 .cursor_pointer()
@@ -711,7 +742,7 @@ impl Launcher {
                     .gap(px(10.))
                     .h(px(44.))
                     .px(px(16.))
-                    .rounded(px(radius::ROW))
+                    .rounded(px(crate::glass_ui::rad(radius::ROW)))
                     .bg(white(fill::BUTTON))
                     .hover(|s| s.bg(white(fill::BUTTON_HOVER)))
                     .cursor_pointer()
@@ -753,7 +784,7 @@ impl Launcher {
                     .items_center()
                     .h(px(36.))
                     .px(px(14.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .bg(white(fill::BUTTON))
                     .hover(|s| s.bg(white(fill::BUTTON_HOVER)))
                     .cursor_pointer()
@@ -789,7 +820,7 @@ impl Launcher {
     }
 
     /// The menu under the player (`Switch player`): everyone who can play, then Manage accounts.
-    fn glass_account_menu(&self, cx: &mut Context<Self>) -> Option<impl IntoElement> {
+    pub(super) fn glass_account_menu(&self, cx: &mut Context<Self>) -> Option<impl IntoElement> {
         if !self.account_menu {
             return None;
         }
@@ -817,7 +848,7 @@ impl Launcher {
                         .gap(px(12.))
                         .h(px(48.))
                         .px(px(10.))
-                        .rounded(px(radius::CONTROL))
+                        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                         .cursor_pointer()
                         .child(hover_layer(&id, white(0.07), radius::CONTROL, 0.))
                         .child(

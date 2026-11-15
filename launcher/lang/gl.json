@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Na última compilación, en Horizon {commit} por {mods}, non en {horizon}",
   "In the last build, on {horizon}": "Na última compilación, en {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Continúa onde o deixaches",
+  "All worlds": "Todos os mundos",
+  "None yet.": "Ningún aínda.",
+  "Outline look": "Aspecto de contorno",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Esquinas cadradas, paneis planos e un Inicio centrado. Só co aspecto escuro.",
+  "Last played {when}": "Última xogada {when}",
+  "Sign in": "Inicia sesión"
 }

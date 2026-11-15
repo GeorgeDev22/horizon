@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Сүүлийн бүтээлд {mods}-ийн төлөө Horizon {commit} дээр, {horizon} дээр биш",
   "In the last build, on {horizon}": "Сүүлийн бүтээлд {horizon} дээр",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Үргэлжлүүлэх",
+  "All worlds": "Бүх ертөнц",
+  "None yet.": "Одоогоор алга.",
+  "Outline look": "Хүрээтэй харагдац",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Дөрвөлжин булан, хавтгай самбар, голлуулсан Нүүр. Зөвхөн бараан харагдацад.",
+  "Last played {when}": "Хамгийн сүүлд тоглосон {when}",
+  "Sign in": "Нэвтрэх"
 }

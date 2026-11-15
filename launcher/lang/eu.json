@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Azken eraikuntzan, Horizon {commit}-n {mods}-engatik, ez {horizon}-n",
   "In the last build, on {horizon}": "Azken eraikuntzan, {horizon}-n",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Jarraitu utzitako lekutik",
+  "All worlds": "Mundu guztiak",
+  "None yet.": "Bat ere ez oraindik.",
+  "Outline look": "Ingerada itxura",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Izkina karratuak, panel lauak eta erdiratutako Hasiera. Itxura ilunean soilik.",
+  "Last played {when}": "Jokatu azkena {when}",
+  "Sign in": "Hasi saioa"
 }

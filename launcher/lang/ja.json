@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "前回のビルドは {mods} のため Horizon {commit} 上（{horizon} ではありません）",
   "In the last build, on {horizon}": "前回のビルドは {horizon} 上",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "続きから遊ぶ",
+  "All worlds": "すべてのワールド",
+  "None yet.": "まだありません。",
+  "Outline look": "アウトライン外観",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "角ばった角、フラットなパネル、中央寄せのホーム。ダーク外観のみ。",
+  "Last played {when}": "最後のプレイ：{when}",
+  "Sign in": "サインイン"
 }

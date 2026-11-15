@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Oxirgi yig'ishda, {mods} uchun Horizon {commit} da, {horizon} da emas",
   "In the last build, on {horizon}": "Oxirgi yig'ishda, {horizon} da",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Davom ettirish",
+  "All worlds": "Barcha dunyolar",
+  "None yet.": "Hozircha yoʻq.",
+  "Outline look": "Kontur koʻrinishi",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Toʻrtburchak burchaklar, tekis panellar va markazdagi Bosh sahifa. Faqat qorongʻi koʻrinishda.",
+  "Last played {when}": "Oxirgi oʻyin {when}",
+  "Sign in": "Kirish"
 }

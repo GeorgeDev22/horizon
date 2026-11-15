@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Fl-aħħar bini, fuq Horizon {commit} għal {mods}, mhux fuq {horizon}",
   "In the last build, on {horizon}": "Fl-aħħar bini, fuq {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Kompli",
+  "All worlds": "Id-dinjiet kollha",
+  "None yet.": "Għad m'hemm xejn.",
+  "Outline look": "Dehra bil-kontorn",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kantunieri kwadri, pannelli ċatti u Dar fiċ-ċentru. Fid-dehra skura biss.",
+  "Last played {when}": "L-aħħar lagħbu {when}",
+  "Sign in": "Idħol"
 }

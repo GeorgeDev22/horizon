@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "ಕೊನೆಯ ಬಿಲ್ಡ್‌ನಲ್ಲಿ, {mods} ಗಾಗಿ Horizon {commit} ನಲ್ಲಿ, {horizon} ನಲ್ಲಿ ಅಲ್ಲ",
   "In the last build, on {horizon}": "ಕೊನೆಯ ಬಿಲ್ಡ್‌ನಲ್ಲಿ, {horizon} ನಲ್ಲಿ",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "ಮುಂದುವರಿಸಿ",
+  "All worlds": "ಎಲ್ಲಾ ಜಗತ್ತುಗಳು",
+  "None yet.": "ಇನ್ನೂ ಯಾವುದೂ ಇಲ್ಲ.",
+  "Outline look": "ಔಟ್‌ಲೈನ್ ನೋಟ",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "ಚೌಕ ಮೂಲೆಗಳು, ಸಮತಟ್ಟಾದ ಫಲಕಗಳು ಮತ್ತು ಮಧ್ಯದಲ್ಲಿ ಮುಖಪುಟ. ಗಾಢ ನೋಟದಲ್ಲಿ ಮಾತ್ರ.",
+  "Last played {when}": "ಕೊನೆಯದಾಗಿ ಆಡಿದ್ದು {when}",
+  "Sign in": "ಸೈನ್ ಇನ್ ಮಾಡಿ"
 }

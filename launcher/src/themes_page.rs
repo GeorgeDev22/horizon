@@ -362,6 +362,31 @@ impl Launcher {
         )
     }
 
+    /// The Outline look's row: square corners, flat plates edged by a line, mono labels.
+    pub(super) fn outline_row(&mut self, cx: &mut Context<Self>) -> Div {
+        let t = self.theme;
+        let on = self.settings.outline();
+        ui::setting_row(
+            tr("Outline look"),
+            Some(
+                div()
+                    .child(tr(
+                        "Square corners, flat panels and a centred Home. Dark appearance only.",
+                    ))
+                    .into_any_element(),
+            ),
+            Some(
+                crate::switch("outline", on, &t)
+                    .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
+                        this.settings.outline = Some(!this.settings.outline());
+                        this.save_settings();
+                        cx.notify();
+                    }))
+                    .into_any_element(),
+            ),
+        )
+    }
+
     /// The value under the pointer, in whole steps, as the look; saved when the drag ends.
     fn pick_look(&mut self, knob: LookKnob, at: Point<Pixels>, cx: &mut Context<Self>) {
         let Some(area) = self.look_sliders.areas[knob as usize].get() else {

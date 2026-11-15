@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Na nwube ikpeazụ, na Horizon {commit} maka {mods}, ọ bụghị na {horizon}",
   "In the last build, on {horizon}": "Na nwube ikpeazụ, na {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Gaa n'ihu",
+  "All worlds": "Ụwa niile",
+  "None yet.": "O nweghị nke ọ bụla ugbu a.",
+  "Outline look": "Ọdịdị akara mpụta",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Akụkụ anọ nha, panel dị larịị na Ụlọ dị n'etiti. Naanị maka ọdịdị gbara ọchịchịrị.",
+  "Last played {when}": "Egwuru ikpeazụ {when}",
+  "Sign in": "Banye"
 }

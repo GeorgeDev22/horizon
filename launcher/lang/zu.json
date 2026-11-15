@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Ekwakhiweni kokugcina, ku-Horizon {commit} ngenxa ka-{mods}, hhayi ku-{horizon}",
   "In the last build, on {horizon}": "Ekwakhiweni kokugcina, ku-{horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Qhubeka",
+  "All worlds": "Yonke imihlaba",
+  "None yet.": "Akukho okwamanje.",
+  "Outline look": "Ukubukeka kohlaka",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Amakhona ayisikwele, amaphaneli ayisicaba kanye neKhaya elisesikhungweni. Ukubukeka okumnyama kuphela.",
+  "Last played {when}": "Igcine ukudlalwa {when}",
+  "Sign in": "Ngena ngemvume"
 }

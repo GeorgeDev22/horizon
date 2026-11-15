@@ -19,6 +19,8 @@ use std::sync::Arc;
 
 /// Logical pixels per texel of a plate's piece of backdrop.
 const PIECE: f32 = 4.;
+/// The Outline look's flat plate, under its 1 px line.
+const PANEL: u32 = 0x100d22;
 
 /// A plate's kind: `.hzl-glass` (panels, the sidebar, dialogs) or `.hzl-float` (menus and
 /// popovers: twice the blur, darker).
@@ -172,13 +174,24 @@ pub fn begin_build(window: &mut Window) {
 /// after it. In performance mode it is a solid colour: no backdrop, no glass.
 pub fn backdrop(kind: Kind, radius: f32) -> AnyElement {
     let (plain, look) = PIECES.with_borrow(|p| (p.plain, p.look));
+    if crate::glass_ui::outline() {
+        return div()
+            .absolute()
+            .top_0()
+            .left_0()
+            .size_full()
+            .bg(rgb(PANEL).opacity(if kind == Kind::Float { 0.96 } else { 0.78 }))
+            .border_1()
+            .border_color(crate::glass_ui::line())
+            .into_any_element();
+    }
     if plain {
         return div()
             .absolute()
             .top_0()
             .left_0()
             .size_full()
-            .rounded(px(radius))
+            .rounded(px(crate::glass_ui::rad(radius)))
             .bg(rgb(look.plate))
             .into_any_element();
     }
@@ -197,7 +210,7 @@ pub fn backdrop(kind: Kind, radius: f32) -> AnyElement {
 pub fn plate(radius: f32) -> Div {
     div()
         .relative()
-        .rounded(px(radius))
+        .rounded(px(crate::glass_ui::rad(radius)))
         .child(backdrop(Kind::Glass, radius))
 }
 
@@ -205,7 +218,7 @@ pub fn plate(radius: f32) -> Div {
 pub fn float(radius: f32) -> Div {
     div()
         .relative()
-        .rounded(px(radius))
+        .rounded(px(crate::glass_ui::rad(radius)))
         .child(backdrop(Kind::Float, radius))
 }
 
@@ -334,7 +347,11 @@ fn paint(bounds: Bounds<Pixels>, kind: Kind, corners: Corners<Pixels>, window: &
 /// inward curve where the strip's right edge meets the panel's top. `strip` is the strip's size,
 /// recorded by [`measure`] inside it. Close to the panel's own width, the panel is one plate
 /// round at 20, as the mockup does.
-pub fn tabbed(strip: Rc<Cell<Option<Size<Pixels>>>>) -> impl IntoElement {
+pub fn tabbed(strip: Rc<Cell<Option<Size<Pixels>>>>) -> AnyElement {
+    // The Outline look: one flat plate under its line, strip and panel alike.
+    if crate::glass_ui::outline() {
+        return backdrop(Kind::Glass, 0.);
+    }
     canvas(
         |_, _, _| {},
         move |bounds, (), window, _| {
@@ -374,6 +391,7 @@ pub fn tabbed(strip: Rc<Cell<Option<Size<Pixels>>>>) -> impl IntoElement {
     .top_0()
     .left_0()
     .size_full()
+    .into_any_element()
 }
 
 /// Records the size of the element it sits in (absolute, filling it) for [`tabbed`].

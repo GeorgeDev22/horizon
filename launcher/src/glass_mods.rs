@@ -158,7 +158,7 @@ impl Launcher {
                         .child(ui::text(13., FontWeight::NORMAL, 0.7).child(tr("Show everything")))
                         .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
                             this.mods.everything = !this.mods.everything;
-                            this.mods_search(0);
+                            this.mods_search_keeping(0, true);
                             cx.notify();
                         })),
                 )
@@ -185,7 +185,7 @@ impl Launcher {
                         .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
                             let filters = &mut this.mods.browse.filters;
                             filters.works_on = !filters.works_on;
-                            this.mods_search(0);
+                            this.mods_search_keeping(0, true);
                             cx.notify();
                         })),
                 )
@@ -277,7 +277,7 @@ impl Launcher {
                         this.mods.browse.filters = Default::default();
                         this.mods.browse.open = None;
                         this.mods.picked = None;
-                        this.mods_search(0);
+                        this.mods_search_keeping(0, true);
                     }
                     cx.notify();
                 })),
@@ -323,7 +323,7 @@ impl Launcher {
                 .gap(px(8.))
                 .h(px(44.))
                 .px(px(14.))
-                .rounded(px(12.))
+                .rounded(px(crate::glass_ui::rad(12.)))
                 .bg(white(if open { 0.11 } else { 0.07 }))
                 .hover(|s| s.bg(white(0.11)))
                 .cursor_pointer()
@@ -796,7 +796,7 @@ fn small_tab(id: SharedString, open: bool, t: &theme::Theme) -> Stateful<Div> {
             .gap(px(6.))
             .h(px(32.))
             .px(px(12.))
-            .rounded(px(10.))
+            .rounded(px(crate::glass_ui::rad(10.)))
             .cursor_pointer()
             .font_family(horizon_theme::glass::FONT)
             .text_size(px(13.))

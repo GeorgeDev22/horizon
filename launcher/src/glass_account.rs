@@ -132,7 +132,7 @@ impl Launcher {
                         .h(px(48.))
                         .w_full()
                         .mt(px(24.))
-                        .rounded(px(radius::ROW))
+                        .rounded(px(crate::glass_ui::rad(radius::ROW)))
                         .bg(gpui::white())
                         // On a light plate, Microsoft's white button keeps an edge.
                         .when(ui::light(), |d| d.border_1().border_color(ui::white(0.15)))
@@ -158,7 +158,7 @@ impl Launcher {
         div()
             .flex()
             .flex_col()
-            .rounded(px(16.))
+            .rounded(px(crate::glass_ui::rad(16.)))
             .bg(white(0.045))
             .p(px(24.))
             .when(has_accounts, |d| {

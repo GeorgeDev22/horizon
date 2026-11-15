@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "In de lèste build, op Horizon {commit} veur {mods}, neet op {horizon}",
   "In the last build, on {horizon}": "In de lèste build, op {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Wiejer spele",
+  "All worlds": "Alle wereldj",
+  "None yet.": "Nag gein.",
+  "Outline look": "Contourlook",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Vierkante hook, platte panele en 'n gecentreerde Thoesbladziej. Allein bie 't donker oetzich.",
+  "Last played {when}": "Letste gesjpeeld {when}",
+  "Sign in": "Meld aan"
 }

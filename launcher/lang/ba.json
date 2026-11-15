@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Һуңғы йыйылышта, {mods} өсөн Horizon {commit}, {horizon} түгел",
   "In the last build, on {horizon}": "Һуңғы йыйылышта, {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Дауам итергә",
+  "All worlds": "Бөтә донъялар",
+  "None yet.": "Әлегә юҡ.",
+  "Outline look": "Контур күренеше",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Квадрат мөйөштәр, яҫы панелдәр һәм уртала Баш бит. Ҡараңғы күренештә генә.",
+  "Last played {when}": "Һуңғы уйнаған {when}",
+  "Sign in": "Инергә"
 }

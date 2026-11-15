@@ -51,6 +51,9 @@ const STAR_WARM: u32 = 0xfff3e4;
 const MARGIN: i32 = 20;
 /// The mockup's sun: right of centre, a little bigger and higher (`wideSun`), on wide windows.
 const WIDE_SUN: (f64, f64, f64) = (0.72, 1.1, 0.1);
+/// The Outline look's sun: centred and larger, under Home's centred hero.
+const CENTRED_SUN: (f64, f64, f64) = (0.5, 1.35, 0.15);
+static CENTRED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 /// The website draws a frame when 31 ms have passed since the last.
 const TICK: Duration = Duration::from_millis(31);
 /// How long the scene keeps moving after the window loses focus.
@@ -230,7 +233,9 @@ impl Model {
     /// height, 180, 320)` high as the website's default.
     pub fn new(width: f64, height: f64) -> Model {
         let land_height = clamp(height * 0.3, 180., 320.);
-        let (sun_x, sun_scale, sun_rise) = if width >= 1024. {
+        let (sun_x, sun_scale, sun_rise) = if CENTRED.load(std::sync::atomic::Ordering::Relaxed) {
+            CENTRED_SUN
+        } else if width >= 1024. {
             WIDE_SUN
         } else {
             (0.5, 1., 0.)
@@ -859,6 +864,17 @@ impl Scene {
     pub fn set_performance(&mut self, fast: bool, cx: &mut Context<Self>) {
         if self.fast != fast {
             self.fast = fast;
+            self.backdrop_for = None;
+            cx.notify();
+        }
+    }
+
+    /// Centres the sun (the Outline look); the picture is baked again when it changes.
+    pub fn set_centred(&mut self, on: bool, cx: &mut Context<Self>) {
+        if CENTRED.swap(on, std::sync::atomic::Ordering::Relaxed) != on {
+            if let Some(old) = self.baked.take() {
+                self.replaced.extend(old.images());
+            }
             self.backdrop_for = None;
             cx.notify();
         }

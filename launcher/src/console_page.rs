@@ -426,7 +426,7 @@ impl Launcher {
                     .mx(px(12.))
                     .mb(px(12.))
                     .p(px(16.))
-                    .rounded(px(radius::LARGE))
+                    .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                     .bg(white(0.04))
                     .child(div().flex_1().min_w_0().child(
                         ui::text(13., FontWeight::NORMAL, ink::SOFT).child(tr(
@@ -504,7 +504,7 @@ impl Launcher {
             .overflow_y_scroll()
             .take_wheel(&self.console.scroll)
             .p(px(16.))
-            .rounded(px(radius::ROW))
+            .rounded(px(crate::glass_ui::rad(radius::ROW)))
             .bg(gpui::black().opacity(0.25))
             .font_family(theme::MONO)
             .text_size(px(12.))

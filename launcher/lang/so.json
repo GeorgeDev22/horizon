@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Dhismihii ugu dambeeyay, Horizon {commit} ee {mods} dartood, ma aha {horizon}",
   "In the last build, on {horizon}": "Dhismihii ugu dambeeyay, {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Ka sii wad",
+  "All worlds": "Dhammaan adduunyada",
+  "None yet.": "Weli midna ma jiro.",
+  "Outline look": "Muuqaalka xariiqda",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Geeso afar-gees ah, guddiyo siman iyo Bogga Hore oo dhexda ah. Kaliya muuqaalka madow.",
+  "Last played {when}": "Ciyaartii u dambaysay {when}",
+  "Sign in": "Gal"
 }

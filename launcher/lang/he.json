@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "בבנייה האחרונה, על Horizon {commit} בשביל {mods}, לא על {horizon}",
   "In the last build, on {horizon}": "בבנייה האחרונה, על {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "המשך מאיפה שעצרת",
+  "All worlds": "כל העולמות",
+  "None yet.": "עדיין אין.",
+  "Outline look": "מראה קווי מתאר",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "פינות מרובעות, לוחות שטוחים ומסך בית ממורכז. במראה כהה בלבד.",
+  "Last played {when}": "שיחק לאחרונה {when}",
+  "Sign in": "היכנס"
 }

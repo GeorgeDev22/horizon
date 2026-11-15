@@ -504,7 +504,7 @@ pub(super) fn danger_button(id: SharedString, label: SharedString) -> Stateful<D
         .items_center()
         .h(px(36.))
         .px(px(12.))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .cursor_pointer()
         .hover(|s| s.bg(gpui::rgba(horizon_theme::glass::DANGER_HOVER << 8 | 0x1f)))
         .child(

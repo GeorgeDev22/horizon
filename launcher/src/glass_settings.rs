@@ -54,7 +54,7 @@ fn tile(lead: AnyElement, title: String, note: String, action: AnyElement) -> Di
         .flex_col()
         .flex_1()
         .min_w(px(140.))
-        .rounded(px(radius::LARGE))
+        .rounded(px(crate::glass_ui::rad(radius::LARGE)))
         .bg(white(0.045))
         .p(px(20.))
         .child(div().child(lead))
@@ -115,7 +115,7 @@ impl Launcher {
                         .gap(px(if wide { 12. } else { 8. }))
                         .h(px(if wide { 40. } else { 34. }))
                         .px(px(if wide { 12. } else { 10. }))
-                        .rounded(px(radius::ROW))
+                        .rounded(px(crate::glass_ui::rad(radius::ROW)))
                         .cursor_pointer()
                         .font_family(horizon_theme::glass::FONT)
                         .text_size(px(14.))
@@ -183,7 +183,7 @@ impl Launcher {
                     }
                 });
             }))
-            .rounded(px(radius::PANEL))
+            .rounded(px(crate::glass_ui::rad(radius::PANEL)))
             .flex()
             .flex_col()
             .gap(px(16.))
@@ -431,8 +431,12 @@ impl Launcher {
             ))
             .child(self.launcher_theme_row(cx))
             .child(self.glass_accent_row(cx))
-            .child(self.look_slider_row(themes_page::LookKnob::Glass, cx))
-            .child(self.look_slider_row(themes_page::LookKnob::Blur, cx))
+            // The Outline look's plates are flat: no white or blur to set.
+            .when(!crate::glass_ui::outline(), |d| {
+                d.child(self.look_slider_row(themes_page::LookKnob::Glass, cx))
+                    .child(self.look_slider_row(themes_page::LookKnob::Blur, cx))
+            })
+            .child(self.outline_row(cx))
             .child(self.performance_row(cx))
             .child(self.home_background_row(cx))
             .child(self.language_row(cx))

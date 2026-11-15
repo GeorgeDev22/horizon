@@ -972,7 +972,7 @@ impl Launcher {
                 div()
                     .h(px(h))
                     .w_full()
-                    .rounded(px(radius::ROW))
+                    .rounded(px(crate::glass_ui::rad(radius::ROW)))
                     .bg(ui::white(0.06))
             };
             return page.child(
@@ -1027,7 +1027,7 @@ impl Launcher {
                     .flex_col()
                     .px(px(12.))
                     .py(px(8.))
-                    .rounded(px(radius::ROW))
+                    .rounded(px(crate::glass_ui::rad(radius::ROW)))
                     .cursor_pointer()
                     .when(chosen, |d| d.bg(ui::white(fill::ACTIVE)))
                     .when(!chosen, |d| d.hover(|s| s.bg(ui::white(0.05))))
@@ -1142,7 +1142,7 @@ impl Launcher {
                 .gap(px(2.))
                 .w(px(136.))
                 .p(px(12.))
-                .rounded(px(radius::LARGE))
+                .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                 .cursor_pointer()
                 .bg(ui::white(0.045))
                 .when(on, |d| {

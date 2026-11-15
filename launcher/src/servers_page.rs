@@ -1095,7 +1095,11 @@ impl Launcher {
                             | Field::AddPlayer
                             | Field::DeleteServer
                     ),
-                    |d| d.h(px(36.)).px(px(12.)).rounded(px(radius::CONTROL)),
+                    |d| {
+                        d.h(px(36.))
+                            .px(px(12.))
+                            .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
+                    },
                 )
                 // The instance dialog's are the large `FIELD_LG`: 48 px, 15 px text, white at 6 %,
                 // 10 % while typed in.
@@ -1119,7 +1123,7 @@ impl Launcher {
                 .when(f == Field::AccentHex, |d| {
                     d.h(px(36.))
                         .px(px(12.))
-                        .rounded(px(radius::CONTROL))
+                        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                         .text_size(px(13.))
                         .font_weight(FontWeight::MEDIUM)
                 })

@@ -225,7 +225,7 @@ impl Launcher {
                     .relative()
                     .flex()
                     .items_center()
-                    .rounded(px(radius::CONTROL)),
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL))),
             )
             .text_color(white(1.))
     }

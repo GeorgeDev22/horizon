@@ -198,7 +198,7 @@ impl Launcher {
                     div()
                         .mt(px(12.))
                         .p(px(16.))
-                        .rounded(px(radius::ROW))
+                        .rounded(px(crate::glass_ui::rad(radius::ROW)))
                         .bg(gpui::black().opacity(0.25))
                         .font_family(theme::MONO)
                         .text_size(px(12.))
@@ -262,7 +262,7 @@ impl Launcher {
             div()
                 .id(SharedString::from(format!("overview-shot-{i}")))
                 .overflow_hidden()
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .cursor_pointer()
                 .children(pictures.next())
         };
@@ -374,7 +374,7 @@ impl Launcher {
             .flex()
             .flex_col()
             .p(px(16.))
-            .rounded(px(radius::LARGE))
+            .rounded(px(crate::glass_ui::rad(radius::LARGE)))
             .bg(white(0.04))
             .overflow_y_scroll()
             .track_scroll(&self.patch_scroll.handle)
@@ -416,7 +416,10 @@ type Sections = Vec<(String, Vec<String>)>;
 /// installs as when it lists changes, else the newest Nightly that does ("Nightly 2026-11-01 ·
 /// 4aa6854 · Nov 1"); for a Java instance (`played` None) or without one, the newest launcher
 /// release ("Launcher 0.2.37 · Nov 2").
-fn patch_source(releases: &[Release], played: Option<&str>) -> Option<(String, Sections)> {
+pub(super) fn patch_source(
+    releases: &[Release],
+    played: Option<&str>,
+) -> Option<(String, Sections)> {
     let day = |r: &Release| glass_versions::published(&r.date, "");
     if let Some(played) = played {
         let nightly = releases

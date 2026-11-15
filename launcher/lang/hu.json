@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "A legutóbbi buildben a Horizon {commit} verzión a(z) {mods} miatt, nem ezen: {horizon}",
   "In the last build, on {horizon}": "A legutóbbi buildben ezen: {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Folytatás",
+  "All worlds": "Összes világ",
+  "None yet.": "Még nincs.",
+  "Outline look": "Körvonalas megjelenés",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Szögletes sarkok, lapos panelek és középre igazított Kezdőlap. Csak sötét megjelenésben.",
+  "Last played {when}": "Utoljára játszott {when}",
+  "Sign in": "Bejelentkezés"
 }

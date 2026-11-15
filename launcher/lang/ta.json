@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "கடைசி உருவாக்கத்தில், {mods} க்காக Horizon {commit} இல், {horizon} இல் அல்ல",
   "In the last build, on {horizon}": "கடைசி உருவாக்கத்தில், {horizon} இல்",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "தொடர்ந்து விளையாடு",
+  "All worlds": "அனைத்து உலகங்கள்",
+  "None yet.": "இன்னும் எதுவும் இல்லை.",
+  "Outline look": "வெளிக்கோட்டுத் தோற்றம்",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "சதுர மூலைகள், தட்டையான பலகங்கள் மற்றும் நடுவில் முகப்பு. இருண்ட தோற்றத்தில் மட்டும்.",
+  "Last played {when}": "கடைசியாக விளையாடியது {when}",
+  "Sign in": "உள்நுழை"
 }

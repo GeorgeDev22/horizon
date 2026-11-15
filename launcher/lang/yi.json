@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "אין דעם לעצטן בוי, אויף Horizon {commit} פֿאַר {mods}, נישט אויף {horizon}",
   "In the last build, on {horizon}": "אין דעם לעצטן בוי, אויף {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "גיי ווייטער",
+  "All worlds": "אַלע וועלטן",
+  "None yet.": "נאָך קיינע ניטאָ.",
+  "Outline look": "קאָנטור־אויסזען",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "קאַנטיקע ווינקלען, פלאַכע פּאַנעלן און אַ צענטרירטע היים. נאָר מיטן טונקעלן אויסזען.",
+  "Last played {when}": "לעצטע געשפילט {when}",
+  "Sign in": "צייכן אין"
 }

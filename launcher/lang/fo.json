@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Í seinasta bygginum, á Horizon {commit} fyri {mods}, ikki á {horizon}",
   "In the last build, on {horizon}": "Í seinasta bygginum, á {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Halt fram",
+  "All worlds": "Allir heimar",
+  "None yet.": "Eingin enn.",
+  "Outline look": "Útlinjusnið",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kantaðir horn, flatar panelir og ein miðsett Heimasíða. Bert myrkt útsjónd.",
+  "Last played {when}": "Seinast spælt {when}",
+  "Sign in": "Rita inn"
 }

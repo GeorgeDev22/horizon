@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Son quruluşda, {mods} üçün Horizon {commit} üzərində, {horizon} üzərində yox",
   "In the last build, on {horizon}": "Son quruluşda, {horizon} üzərində",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Davam et",
+  "All worlds": "Bütün dünyalar",
+  "None yet.": "Hələ yoxdur.",
+  "Outline look": "Kontur görünüşü",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kvadrat künclər, düz panellər və mərkəzdə Ana səhifə. Yalnız tünd görünüş.",
+  "Last played {when}": "Son oynanıldı {when}",
+  "Sign in": "Daxil olun"
 }

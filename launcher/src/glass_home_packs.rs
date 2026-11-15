@@ -24,7 +24,7 @@ impl Launcher {
             .id("packs")
             .flex()
             .flex_col()
-            .rounded(px(radius::ROW))
+            .rounded(px(crate::glass_ui::rad(radius::ROW)))
             .drag_over::<ExternalPaths>(|s, _, _, _| s.bg(white(fill::ROW_HOVER)))
             .on_drop(cx.listener(|this, paths: &ExternalPaths, _, cx| {
                 this.add_packs(paths.paths().to_vec());
@@ -267,7 +267,7 @@ impl Launcher {
                         div()
                             .w_full()
                             .aspect_ratio(16. / 9.)
-                            .rounded(px(radius::ROW))
+                            .rounded(px(crate::glass_ui::rad(radius::ROW)))
                             .overflow_hidden()
                             .bg(white(fill::HOVER))
                             .children(picture),

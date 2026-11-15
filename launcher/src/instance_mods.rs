@@ -526,7 +526,7 @@ impl Launcher {
                 .items_center()
                 .h(px(24.))
                 .px(px(10.))
-                .rounded(px(night::RADIUS_CONTROL))
+                .rounded(px(crate::glass_ui::rad(night::RADIUS_CONTROL)))
                 .bg(alpha(n.warn, 0.16))
                 .cursor_pointer()
                 .hover(move |s| s.bg(alpha(n.warn, 0.26)))

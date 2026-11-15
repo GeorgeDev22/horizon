@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Sa tógáil dheireanach, ar Horizon {commit} do {mods}, ní ar {horizon}",
   "In the last build, on {horizon}": "Sa tógáil dheireanach, ar {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Lean ar aghaidh",
+  "All worlds": "Gach domhan",
+  "None yet.": "Dada fós.",
+  "Outline look": "Cuma imlíne",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Coirnéil chearnacha, painéil réidhe agus Baile i lár baill. Cuma dhorcha amháin.",
+  "Last played {when}": "Seinnte an uair dheireanach {when}",
+  "Sign in": "Sínigh isteach"
 }

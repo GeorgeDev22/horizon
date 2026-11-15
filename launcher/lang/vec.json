@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Ne l'ultima compilasion, su Horizon {commit} par {mods}, no su {horizon}",
   "In the last build, on {horizon}": "Ne l'ultima compilasion, su {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Va vanti",
+  "All worlds": "Tuti i mondi",
+  "None yet.": "Gnancora nisun.",
+  "Outline look": "Aspeto a contorno",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Canton quadrài, paneli piati e na Casa in mezo. Solo co l'aspeto scuro.",
+  "Last played {when}": "Ultima giocata {when}",
+  "Sign in": "Entra"
 }

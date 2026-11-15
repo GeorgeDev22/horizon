@@ -39,7 +39,7 @@ impl Launcher {
                     .items_center()
                     .h(px(32.))
                     .px(px(12.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .cursor_pointer()
                     .font_family(horizon_theme::glass::FONT)
                     .text_size(px(13.))
@@ -268,7 +268,7 @@ impl Launcher {
                 .flex_none()
                 .gap(px(12.))
                 .p(px(16.))
-                .rounded(px(radius::POPOVER))
+                .rounded(px(crate::glass_ui::rad(radius::POPOVER)))
                 .bg(warn.opacity(0.1))
                 .child(ui::icon("information-circle", 20., warn))
                 .child(

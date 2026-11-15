@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Am leschte Build, op Horizon {commit} fir {mods}, net op {horizon}",
   "In the last build, on {horizon}": "Am leschte Build, op {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Weiderspillen",
+  "All worlds": "All Welten",
+  "None yet.": "Nach keng.",
+  "Outline look": "Kontur-Look",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Eckeg Ecken, flaach Felder an eng zentréiert Startsäit. Nëmmen am donkelen Ausgesinn.",
+  "Last played {when}": "Lescht gespillt {when}",
+  "Sign in": "Umellen"
 }

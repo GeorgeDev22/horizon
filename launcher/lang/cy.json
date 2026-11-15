@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Yn yr adeiladu diwethaf, ar Horizon {commit} ar gyfer {mods}, nid ar {horizon}",
   "In the last build, on {horizon}": "Yn yr adeiladu diwethaf, ar {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Ail-gydio ynddi",
+  "All worlds": "Pob byd",
+  "None yet.": "Dim eto.",
+  "Outline look": "Golwg amlinell",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Corneli sgwâr, paneli gwastad a Hafan yn y canol. Golwg dywyll yn unig.",
+  "Last played {when}": "Chwaraewyd ddiwethaf {when}",
+  "Sign in": "Mewngofnodi"
 }

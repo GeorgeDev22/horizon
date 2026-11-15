@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "A l'última compilació, a Horizon {commit} per {mods}, no a {horizon}",
   "In the last build, on {horizon}": "A l'última compilació, a {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Continua on ho vas deixar",
+  "All worlds": "Tots els mons",
+  "None yet.": "Encara cap.",
+  "Outline look": "Aspecte de contorn",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Cantonades quadrades, panells plans i un Inici centrat. Només aspecte fosc.",
+  "Last played {when}": "Última jugada {when}",
+  "Sign in": "Inicia la sessió"
 }

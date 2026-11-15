@@ -37,7 +37,7 @@ pub(super) fn choice(id: impl Into<SharedString>, on: bool, t: &Theme) -> Statef
         div()
             .id(id.into())
             .flex()
-            .rounded(px(radius::POPOVER))
+            .rounded(px(crate::glass_ui::rad(radius::POPOVER)))
             .cursor_pointer()
             .bg(white(if on { fill::ACTIVE } else { 0.04 }))
             .when(!on, |d| d.hover(|s| s.bg(white(0.07)))),
@@ -92,7 +92,7 @@ pub(super) fn list_choice(id: impl Into<SharedString>, on: bool, t: &Theme) -> S
             .items_center()
             .gap(px(16.))
             .px(px(16.))
-            .rounded(px(radius::ROW))
+            .rounded(px(crate::glass_ui::rad(radius::ROW)))
             .cursor_pointer()
             .when(on, |d| d.bg(white(0.11)))
             .when(!on, |d| d.hover(|s| s.bg(white(fill::HOVER)))),
@@ -120,7 +120,7 @@ pub(super) fn list_box(id: &'static str, max: f32) -> Stateful<Div> {
         .overflow_y_scroll()
         .on_scroll(|_, _, cx| cx.stop_propagation())
         .p(px(6.))
-        .rounded(px(radius::POPOVER))
+        .rounded(px(crate::glass_ui::rad(radius::POPOVER)))
         .bg(white(0.04))
 }
 
@@ -468,7 +468,7 @@ impl Launcher {
                     .gap(px(10.))
                     .h(px(40.))
                     .px(px(8.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .cursor_pointer()
                     .font_family(horizon_theme::glass::FONT)
                     .text_size(px(14.))
@@ -493,7 +493,7 @@ impl Launcher {
             .h_full()
             .p(px(28.))
             .overflow_y_scroll()
-            .rounded_l(px(radius::MODAL))
+            .rounded_l(px(crate::glass_ui::rad(radius::MODAL)))
             .bg(white(0.035))
             .child(
                 ui::text(13., FontWeight::MEDIUM, ink::QUIET).child(tr(if editing.is_some() {
@@ -722,7 +722,7 @@ impl Launcher {
                 .items_center()
                 .h(px(48.))
                 .px(px(20.))
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .cursor_pointer()
                 .font_family(horizon_theme::glass::FONT)
                 .text_size(px(15.))
@@ -747,7 +747,7 @@ impl Launcher {
                 .justify_center()
                 .h(px(48.))
                 .px(px(32.))
-                .rounded(px(radius::LARGE))
+                .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                 .bg(accent)
                 .cursor_pointer()
                 .hover(move |s| s.bg(lit))
@@ -786,7 +786,7 @@ impl Launcher {
             .gap(px(12.))
             .px(px(36.))
             .py(px(20.))
-            .rounded_br(px(radius::MODAL))
+            .rounded_br(px(crate::glass_ui::rad(radius::MODAL)))
             .bg(white(0.03))
             // Why Create failed takes the folder's place, by the buttons.
             .child(match error {
@@ -887,7 +887,7 @@ impl Launcher {
                     .items_center()
                     .justify_center()
                     .size(px(36.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .bg(white(fill::BUTTON))
                     .child(ui::icon("plus-sign", 18., white(ink::BODY))),
             )

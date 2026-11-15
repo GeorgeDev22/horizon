@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Pēdējā būvējumā uz Horizon {commit} dēļ {mods}, nevis uz {horizon}",
   "In the last build, on {horizon}": "Pēdējā būvējumā uz {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Turpināt",
+  "All worlds": "Visas pasaules",
+  "None yet.": "Vēl nav.",
+  "Outline look": "Kontūru izskats",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Taisnstūrveida stūri, plakani paneļi un centrēts Sākums. Tikai tumšajā izskatā.",
+  "Last played {when}": "Pēdējo reizi spēlēts {when}",
+  "Sign in": "Pierakstīties"
 }

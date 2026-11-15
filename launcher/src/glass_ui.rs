@@ -18,6 +18,7 @@ thread_local! {
     static FLAT: Cell<bool> = const { Cell::new(false) };
     /// The light appearance: the glass look's white ink and fills turn to [`INK`].
     static LIGHT: Cell<bool> = const { Cell::new(false) };
+    static OUTLINE: Cell<bool> = const { Cell::new(false) };
 }
 
 /// The light appearance's ink: the mockup's text on white (`#100a1f`), at the opacities the dark
@@ -109,7 +110,7 @@ pub fn setting_row(
         .gap_y(px(12.))
         .px(px(16.))
         .py(px(16.))
-        .rounded(px(radius::LARGE))
+        .rounded(px(crate::glass_ui::rad(radius::LARGE)))
         .child(
             div()
                 .flex()
@@ -145,7 +146,7 @@ pub fn setting_row_stacked(
         .gap(px(16.))
         .px(px(16.))
         .py(px(16.))
-        .rounded(px(radius::LARGE))
+        .rounded(px(crate::glass_ui::rad(radius::LARGE)))
         .child(
             div()
                 .flex()
@@ -175,7 +176,7 @@ pub fn wide_field(field: Stateful<Div>, focused: bool) -> Stateful<Div> {
         .h(px(44.))
         .px(px(16.))
         .border_0()
-        .rounded(px(radius::ROW))
+        .rounded(px(crate::glass_ui::rad(radius::ROW)))
         .bg(white(if focused { 0.11 } else { 0.07 }))
         .font_family(horizon_theme::glass::FONT)
         .text_size(px(14.))
@@ -192,7 +193,7 @@ pub fn focus_ring(radius: f32) -> Div {
         .top_0()
         .left_0()
         .size_full()
-        .rounded(px(radius))
+        .rounded(px(crate::glass_ui::rad(radius)))
         .border_2()
         .border_color(color(look().accent_soft))
 }
@@ -205,6 +206,39 @@ pub fn on() -> bool {
 /// Set as each frame's pages start being built.
 pub fn set_on(on: bool) {
     ON.set(on);
+}
+
+/// The Outline look (Settings → Appearance): the glass look's pages with square corners, flat
+/// plates edged by a 1 px line, and its own top bar, sidebar and Home.
+pub fn outline() -> bool {
+    OUTLINE.get()
+}
+
+pub fn set_outline(on: bool) {
+    OUTLINE.set(on);
+}
+
+/// A corner of the glass look: square in the Outline look.
+pub fn rad(r: f32) -> f32 {
+    if outline() {
+        0.
+    } else {
+        r
+    }
+}
+
+/// The Outline look's 1 px edge.
+pub fn line() -> Hsla {
+    white(0.12)
+}
+
+/// A label in the Outline look: Geist Mono, upper case, spaced out.
+pub fn mono(size: f32, a: f32) -> Div {
+    div()
+        .font_family(crate::theme::MONO)
+        .text_size(px(size))
+        .line_height(px(size * 1.4))
+        .text_color(white(a))
 }
 
 /// Set as each frame's pages start being built: the colours for the player's accent.
@@ -253,7 +287,14 @@ pub fn icon(name: &'static str, size: f32, color: Hsla) -> Svg {
 
 /// A layer filling its parent, round at `r`, for hover fills.
 fn layer(r: f32) -> impl Fn() -> Div {
-    move || div().absolute().top_0().left_0().size_full().rounded(px(r))
+    move || {
+        div()
+            .absolute()
+            .top_0()
+            .left_0()
+            .size_full()
+            .rounded(px(crate::glass_ui::rad(r)))
+    }
 }
 
 /// `id`'s fill eased between `from` (white at that opacity) and `to` while hovered, as the
@@ -315,7 +356,7 @@ pub fn row(id: impl Into<SharedString>, current: bool, pr: f32, t: &Theme) -> St
         .w_full()
         .p(px(8.))
         .pr(px(pr))
-        .rounded(px(radius::ROW))
+        .rounded(px(crate::glass_ui::rad(radius::ROW)))
         .cursor_pointer();
     let d = if current {
         d.bg(white(fill::SELECTED))
@@ -378,7 +419,7 @@ pub fn icon_button(
         .items_center()
         .justify_center()
         .size(px(size))
-        .rounded(px(r))
+        .rounded(px(crate::glass_ui::rad(r)))
         .cursor_pointer();
     let d = if active {
         d.bg(white(fill::ACTIVE))
@@ -412,7 +453,7 @@ pub fn tab(
         .gap(px(6.))
         .h(px(36.))
         .px(px(14.))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .cursor_pointer()
         .font_family(horizon_theme::glass::FONT)
         .text_size(px(15.))
@@ -509,7 +550,7 @@ pub fn menu_row(
         .h(px(40.))
         .w_full()
         .px(px(MENU_ROW_PADDING))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .cursor_pointer()
         .child(hover_fade(&id, layer(radius::CONTROL), move |d, a| {
             d.bg(hover_color.opacity(hover_color.a * a))
@@ -560,7 +601,7 @@ pub fn dialog_plate(radius: f32) -> Div {
             .top_0()
             .left_0()
             .size_full()
-            .rounded(px(radius))
+            .rounded(px(crate::glass_ui::rad(radius)))
             .bg(c)
     };
     crate::glass::plate(radius)
@@ -593,7 +634,7 @@ pub fn solid(
             .min_h(px(h))
             .py(px(4.))
             .px(px(16.))
-            .rounded(px(radius::CONTROL))
+            .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
             .text_center()
             .bg(paper())
             .cursor_pointer()
@@ -623,7 +664,7 @@ pub fn big_icon(id: impl Into<SharedString>, name: &'static str, t: &Theme) -> S
             .items_center()
             .justify_center()
             .size(px(56.))
-            .rounded(px(radius::LARGE))
+            .rounded(px(crate::glass_ui::rad(radius::LARGE)))
             .bg(white(fill::BUTTON))
             .hover(|s| s.bg(white(0.13)))
             .cursor_pointer()
@@ -652,7 +693,7 @@ pub fn menu_item(
         .w_full()
         .px(px(12.))
         .py(px(8.))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .when(!locked, |d| {
             d.cursor_pointer()
                 .child(hover_fade(&id, layer(radius::CONTROL), |d, a| {
@@ -702,7 +743,7 @@ pub fn pick_row(
         .h(px(36.))
         .w_full()
         .px(px(12.))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .cursor_pointer()
         .child(hover_fade(&id, layer(radius::CONTROL), |d, a| {
             d.bg(white(0.07 * a))
@@ -745,7 +786,7 @@ pub fn quiet_icon(
             .gap(px(8.))
             .h(px(h))
             .px(px(14.))
-            .rounded(px(radius::CONTROL))
+            .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
             .bg(white(fill::BUTTON))
             .hover(|s| s.bg(white(0.14)))
             .cursor_pointer()
@@ -787,7 +828,7 @@ pub fn list_row(
         .w_full()
         .px(px(12.))
         .py(px(10.))
-        .rounded(px(radius::ROW))
+        .rounded(px(crate::glass_ui::rad(radius::ROW)))
         .child(fill)
         .on_hover(move |hovered, window, cx| {
             note_hover(&key, *hovered, window);
@@ -874,7 +915,7 @@ pub fn field(focused: bool, invalid: bool) -> Div {
         .h(px(44.))
         .px(px(16.))
         .overflow_hidden()
-        .rounded(px(radius::ROW))
+        .rounded(px(crate::glass_ui::rad(radius::ROW)))
         .bg(bg)
         .font_family(horizon_theme::glass::FONT)
         .text_size(px(14.))
@@ -931,7 +972,7 @@ pub fn button(id: SharedString, label: SharedString, kind: Kind, t: &Theme) -> S
         .gap(px(8.))
         .h(px(36.))
         .px(px(14.))
-        .rounded(px(radius::CONTROL))
+        .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
         .cursor_pointer()
         .font_family(horizon_theme::glass::FONT)
         .text_size(px(14.))
@@ -970,7 +1011,7 @@ pub fn segments<T: Copy + PartialEq + 'static>(
         .flex_none()
         .gap(px(4.))
         .p(px(4.))
-        .rounded(px(radius::LARGE))
+        .rounded(px(crate::glass_ui::rad(radius::LARGE)))
         .bg(white(0.04))
         .children(options.iter().map(|&(value, label)| {
             let active = current == value;
@@ -983,7 +1024,7 @@ pub fn segments<T: Copy + PartialEq + 'static>(
                 .justify_center()
                 .h(px(32.))
                 .px(px(12.))
-                .rounded(px(radius::CONTROL))
+                .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                 .cursor_pointer()
                 .font_family(horizon_theme::glass::FONT)
                 .text_size(px(14.))

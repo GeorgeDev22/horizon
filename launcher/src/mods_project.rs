@@ -779,40 +779,47 @@ impl Launcher {
             }
             action = action.child(install);
         }
-        let head = div()
-            .flex()
-            .items_center()
-            .gap(px(20.))
-            .child(icon)
-            .child(
-                div()
-                    .flex()
-                    .flex_col()
-                    .flex_1()
-                    .min_w_0()
-                    .gap(px(4.))
-                    .child(text(theme::TITLE).text_color(t.ink).child(p.title.clone()))
-                    .child(
-                        text(theme::UI)
-                            .text_color(t.muted)
-                            .child(if authors.is_empty() {
-                                p.summary.clone()
-                            } else {
-                                format!(
-                                    "{} · {}",
-                                    trf("by {author}", &[("author", &authors)]),
-                                    p.summary
-                                )
-                            }),
-                    )
-                    .child(
-                        text(theme::CAPTION)
-                            .text_color(t.muted)
-                            .child(meta.join(" · ")),
-                    )
-                    .children(categories),
-            )
-            .child(action);
+        let head = div().flex().items_start().gap(px(20.)).child(icon).child(
+            div()
+                .flex()
+                .flex_col()
+                .flex_1()
+                .min_w_0()
+                .gap(px(4.))
+                .child(
+                    div()
+                        .flex()
+                        .items_center()
+                        .gap(px(16.))
+                        .child(
+                            text(theme::TITLE)
+                                .flex_1()
+                                .min_w_0()
+                                .text_color(t.ink)
+                                .child(p.title.clone()),
+                        )
+                        .child(action),
+                )
+                .child(
+                    text(theme::UI)
+                        .text_color(t.muted)
+                        .child(if authors.is_empty() {
+                            p.summary.clone()
+                        } else {
+                            format!(
+                                "{} · {}",
+                                trf("by {author}", &[("author", &authors)]),
+                                p.summary
+                            )
+                        }),
+                )
+                .child(
+                    text(theme::CAPTION)
+                        .text_color(t.muted)
+                        .child(meta.join(" · ")),
+                )
+                .children(categories),
+        );
         let mut page = div()
             .flex()
             .flex_col()

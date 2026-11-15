@@ -278,7 +278,7 @@ impl Launcher {
             div()
                 .mt(px(20.))
                 .p(px(20.))
-                .rounded(px(radius::POPOVER))
+                .rounded(px(crate::glass_ui::rad(radius::POPOVER)))
                 .bg(white(0.045))
         };
         let mut card = ui::dialog_plate(radius::MODAL)
@@ -443,7 +443,7 @@ impl Launcher {
                         .gap(px(10.))
                         .h(px(44.))
                         .px(px(20.))
-                        .rounded(px(radius::ROW))
+                        .rounded(px(crate::glass_ui::rad(radius::ROW)))
                         .bg(gpui::white())
                         .cursor_pointer()
                         .hover(|s| s.opacity(0.9))

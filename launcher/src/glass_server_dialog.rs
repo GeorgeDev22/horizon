@@ -169,7 +169,7 @@ impl Launcher {
             .h_full()
             .p(px(28.))
             .overflow_y_scroll()
-            .rounded_l(px(radius::MODAL))
+            .rounded_l(px(crate::glass_ui::rad(radius::MODAL)))
             .bg(white(0.035))
             .child(ui::text(13., FontWeight::MEDIUM, ink::QUIET).child(tr("New server")))
             .child(
@@ -179,7 +179,7 @@ impl Launcher {
                     .h(px(190.))
                     .flex_none()
                     .overflow_hidden()
-                    .rounded(px(18.))
+                    .rounded(px(crate::glass_ui::rad(18.)))
                     .child(div().size_full().child(cover)),
             )
             .child(
@@ -398,7 +398,7 @@ impl Launcher {
                 .flex()
                 .gap(px(4.))
                 .p(px(4.))
-                .rounded(px(radius::LARGE))
+                .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                 .bg(white(0.04))
         };
         let difficulties = strip().children(DIFFICULTIES.iter().map(|&(id, label)| {
@@ -410,7 +410,7 @@ impl Launcher {
                     .items_center()
                     .h(px(40.))
                     .px(px(16.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .cursor_pointer()
                     .font_family(horizon_theme::glass::FONT)
                     .text_size(px(14.))
@@ -441,7 +441,7 @@ impl Launcher {
                     .items_center()
                     .justify_center()
                     .size(px(40.))
-                    .rounded(px(radius::CONTROL))
+                    .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .cursor_pointer()
                     .hover(|s| s.bg(white(fill::BUTTON)))
                     .child(ui::icon(icon, 17., white(ink::FULL))),
@@ -524,7 +524,7 @@ impl Launcher {
             .justify_between()
             .gap(px(24.))
             .p(px(16.))
-            .rounded(px(radius::POPOVER))
+            .rounded(px(crate::glass_ui::rad(radius::POPOVER)))
             .bg(white(0.04))
             .child(
                 div()
@@ -599,7 +599,7 @@ impl Launcher {
                 .flex()
                 .items_center()
                 .h(px(44.))
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .bg(white(fill::ROW_HOVER))
                 .child(
                     div()
@@ -653,7 +653,7 @@ impl Launcher {
                 .items_center()
                 .h(px(32.))
                 .px(px(12.))
-                .rounded(px(9.))
+                .rounded(px(crate::glass_ui::rad(9.)))
                 .bg(white(fill::BUTTON))
                 .cursor_pointer()
                 .hover(|s| s.bg(white(fill::BUTTON_HOVER)))
@@ -678,7 +678,7 @@ impl Launcher {
                 .items_center()
                 .h(px(44.))
                 .pr(px(6.))
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .bg(white(if focused { fill::BUTTON } else { 0.04 }))
                 .child(self.field(Field::Players, "Add a friend's name", 170., cx))
                 .child(add),
@@ -711,7 +711,7 @@ impl Launcher {
             .items_center()
             .justify_center()
             .size(px(22.))
-            .rounded(px(7.))
+            .rounded(px(crate::glass_ui::rad(7.)))
             .bg(if eula {
                 ui::color(look.accent)
             } else {
@@ -782,7 +782,7 @@ impl Launcher {
                 .items_center()
                 .h(px(48.))
                 .px(px(20.))
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .cursor_pointer()
                 .font_family(horizon_theme::glass::FONT)
                 .text_size(px(15.))
@@ -802,7 +802,7 @@ impl Launcher {
                 .justify_center()
                 .h(px(48.))
                 .px(px(32.))
-                .rounded(px(radius::LARGE))
+                .rounded(px(crate::glass_ui::rad(radius::LARGE)))
                 .bg(accent)
                 .cursor_pointer()
                 .hover(move |s| s.bg(lit))
@@ -852,7 +852,7 @@ impl Launcher {
             .gap(px(16.))
             .px(px(36.))
             .py(px(20.))
-            .rounded_br(px(radius::MODAL))
+            .rounded_br(px(crate::glass_ui::rad(radius::MODAL)))
             .bg(white(0.03))
             .child(
                 div()

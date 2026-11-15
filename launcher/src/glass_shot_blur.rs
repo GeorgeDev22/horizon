@@ -53,12 +53,12 @@ impl Launcher {
         match self.picture(path, look, cx) {
             Some(image) => gpui::img(image)
                 .size_full()
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .object_fit(gpui::ObjectFit::Cover)
                 .into_any_element(),
             None => div()
                 .size_full()
-                .rounded(px(radius::ROW))
+                .rounded(px(crate::glass_ui::rad(radius::ROW)))
                 .bg(white(fill::HOVER))
                 .into_any_element(),
         }

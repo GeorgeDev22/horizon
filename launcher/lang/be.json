@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "У апошняй зборцы — на Horizon {commit} дзеля {mods}, не на {horizon}",
   "In the last build, on {horizon}": "У апошняй зборцы — на {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Працягнуць",
+  "All worlds": "Усе светы",
+  "None yet.": "Пакуль няма.",
+  "Outline look": "Контурны выгляд",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Квадратныя вуглы, плоскія панэлі і Галоўная па цэнтры. Толькі цёмны выгляд.",
+  "Last played {when}": "Апошні раз — {when}",
+  "Sign in": "Увайсці"
 }

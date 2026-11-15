@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "We ôstatnij kompilacyji na Horizonie {commit} dlo {mods}, niy na {horizon}",
   "In the last build, on {horizon}": "We ôstatnij kompilacyji na {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Grej dalij",
+  "All worlds": "Wszyjske światy",
+  "None yet.": "Jeszcze żodnych.",
+  "Outline look": "Wyglōnd konturowy",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Kwadratowe rogi, płaske panele i wyśrodkowany przodek. Ino we ciymnym wyglōndzie.",
+  "Last played {when}": "Ôstatni rozgrōny {when}",
+  "Sign in": "Zalogować sie"
 }

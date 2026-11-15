@@ -1238,5 +1238,12 @@
   "In the last build, on Horizon {commit} for {mods}, not on {horizon}": "Di build terakhir, pada Horizon {commit} untuk {mods}, bukan pada {horizon}",
   "In the last build, on {horizon}": "Di build terakhir, pada {horizon}",
   "Duplicate native mod {id}.": "Duplicate native mod {id}.",
-  "Native and content mod ids differ.": "Native and content mod ids differ."
+  "Native and content mod ids differ.": "Native and content mod ids differ.",
+  "Jump back in": "Lanjutkan bermain",
+  "All worlds": "Semua dunia",
+  "None yet.": "Belum ada.",
+  "Outline look": "Tampilan garis tepi",
+  "Square corners, flat panels and a centred Home. Dark appearance only.": "Sudut persegi, panel datar, dan Beranda di tengah. Hanya untuk tampilan gelap.",
+  "Last played {when}": "Terakhir dimainkan {when}",
+  "Sign in": "Masuk"
 }

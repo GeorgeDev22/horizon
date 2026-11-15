@@ -96,7 +96,13 @@ impl Sticky {
 }
 
 fn scrolled(handle: &ScrollHandle) -> f32 {
-    f32::from(-handle.offset().y).max(0.)
+    let at = f32::from(-handle.offset().y).max(0.);
+    // A touchpad's flick can carry the offset past the end for a frame before the page settles:
+    // the panel follows only the scroll the page can really have, so it doesn't jump and back.
+    match f32::from(handle.max_offset().y) {
+        max if max > 0. => at.min(max),
+        _ => at,
+    }
 }
 
 #[cfg(test)]

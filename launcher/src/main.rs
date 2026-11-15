@@ -53,6 +53,8 @@ mod motion;
 mod multiplayer_page;
 mod native_log_page;
 mod new_instance;
+mod outline_frame;
+mod outline_home;
 mod owner_page;
 mod packs_page;
 mod partner;
@@ -391,6 +393,7 @@ struct Launcher {
     friend_focus: FocusHandle,
     /// The window's width at the last frame: Home's head lays out by it, as the mockup's `xl`.
     window_width: f32,
+    window_height: f32,
     /// The window's longer side in points, and the screen's pixels per point: the size pictures
     /// are made at (`picture_cache`).
     window_long_side: f32,
@@ -435,6 +438,7 @@ struct Launcher {
     home_menu: glass_home::HomeMenu,
     /// Whether the pointer is over Home's folder button, which then shows its ⋯.
     folder_hovered: bool,
+    folder_more_hovered: bool,
     /// The list row under the pointer in Home's glass tabs (a world, a server): it shows its
     /// actions then.
     list_hover: Option<SharedString>,
@@ -692,6 +696,7 @@ impl Launcher {
             friend_code: line_edit::LineEdit::new(String::new(), 256, 32),
             friend_focused: false,
             window_width: 0.,
+            window_height: 0.,
             window_long_side: 0.,
             scale_factor: 1.,
             friend_focus: cx.focus_handle(),
@@ -714,6 +719,7 @@ impl Launcher {
             home_tab: home_tabs::HomeTab::from_env(),
             home_menu: Default::default(),
             folder_hovered: false,
+            folder_more_hovered: false,
             list_hover: None,
             list_menu: None,
             home_strip: Default::default(),
@@ -2134,7 +2140,7 @@ fn hover_layer(id: &SharedString, color: Hsla, radius: f32, bleed: f32) -> AnyEl
             .bottom_0()
             .left(px(-bleed))
             .right(px(-bleed))
-            .rounded(px(radius))
+            .rounded(px(glass_ui::rad(radius)))
     };
     hover_fade(id, layer, move |d, a| d.bg(color.opacity(color.a * a)))
 }
@@ -3584,7 +3590,9 @@ impl Launcher {
 
         // The glass look's head (the mockup's `HomeView`) replaces the banner; the preparation's
         // steps stay right under it, where the player looks after pressing Play.
-        let banner = if t.glass {
+        let banner = if t.glass && glass_ui::outline() {
+            self.outline_home_head(&tag, prepared, steps, cx)
+        } else if t.glass {
             div()
                 .flex()
                 .flex_col()
@@ -5252,6 +5260,7 @@ impl Render for Launcher {
             self.theme = self.settings_theme(window);
         }
         glass_ui::set_on(self.theme.glass);
+        glass_ui::set_outline(self.theme.glass && self.theme.dark && self.settings.outline());
         glass_ui::set_light(!self.theme.dark);
         glass::set_light(!self.theme.dark);
         self.look = self.theme.look;
@@ -5266,6 +5275,9 @@ impl Render for Launcher {
         glass::set_plain(performance);
         self.scene
             .update(cx, |scene, cx| scene.set_performance(performance, cx));
+        let centred = glass_ui::outline();
+        self.scene
+            .update(cx, |scene, cx| scene.set_centred(centred, cx));
         let blur = if performance { 0. } else { blur };
         self.scene
             .update(cx, |scene, cx| scene.set_look(tint, blur, cx));
@@ -5282,6 +5294,7 @@ impl Render for Launcher {
         self.proxy_focused = self.proxy_focus.is_focused(window);
         let size = window.viewport_size();
         self.window_width = f32::from(size.width);
+        self.window_height = f32::from(size.height);
         self.window_long_side = f32::from(size.width).max(f32::from(size.height));
         self.scale_factor = window.scale_factor();
         let content = match self.page {
@@ -5336,7 +5349,11 @@ impl Render for Launcher {
         // Dark: the glass frame over the scene; Light keeps the night one over the dawn.
         let (topbar, sidebar) = if t.glass {
             (
-                self.glass_topbar(cx),
+                if glass_ui::outline() {
+                    self.outline_topbar(window, cx)
+                } else {
+                    self.glass_topbar(cx)
+                },
                 self.glass_sidebar(window, cx).into_any_element(),
             )
         } else {

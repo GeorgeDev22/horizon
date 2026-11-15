@@ -61,7 +61,8 @@ impl Launcher {
 
     /// The top bar's line, on a wide window (`hidden … xl:block`).
     pub(super) fn toast_in_topbar(&self) -> Option<Div> {
-        (self.window_width >= 1280.).then(|| {
+        // The Outline bar centres its pages over this spot: its toasts float at the bottom.
+        (self.window_width >= 1280. && !ui::outline()).then(|| {
             ui::text(13., FontWeight::NORMAL, 0.7)
                 .flex_1()
                 .min_w_0()
@@ -74,32 +75,37 @@ impl Launcher {
 
     /// The toast along the bottom, on a narrower window (`xl:hidden`).
     pub(super) fn toast_float(&self) -> Option<Div> {
-        if self.window_width >= 1280. {
+        if self.window_width >= 1280. && !ui::outline() {
             return None;
         }
         let (text, n) = current()?;
+        let line = ui::text(13., FontWeight::NORMAL, ink::FULL)
+            .relative()
+            .text_color(white(ink::FULL))
+            .child(text);
+        // The Outline look's toast is a small card centred over the page, as its menus are.
+        let card = if ui::outline() {
+            crate::glass::plate(horizon_theme::glass::radius::POPOVER)
+                .shadow_lg()
+                .max_w_full()
+                .px(px(16.))
+                .py(px(10.))
+        } else {
+            crate::glass::float(20.).w_full().px(px(16.)).py(px(12.))
+        };
         Some(
             div()
                 .absolute()
                 .left(px(16.))
                 .right(px(16.))
                 .bottom(px(16.))
-                .child(
-                    crate::glass::float(20.)
-                        .px(px(16.))
-                        .py(px(12.))
-                        .child(
-                            ui::text(13., FontWeight::NORMAL, ink::FULL)
-                                .relative()
-                                .text_color(white(ink::FULL))
-                                .child(text),
-                        )
-                        .with_animation(
-                            ElementId::named_usize("toast", n as usize),
-                            crate::motion::eased(crate::motion::POP),
-                            |d, p| d.opacity(p).top(px(crate::motion::POP_RISE * (1. - p))),
-                        ),
-                ),
+                .flex()
+                .justify_center()
+                .child(card.child(line).with_animation(
+                    ElementId::named_usize("toast", n as usize),
+                    crate::motion::eased(crate::motion::POP),
+                    |d, p| d.opacity(p).top(px(crate::motion::POP_RISE * (1. - p))),
+                )),
         )
     }
 }
