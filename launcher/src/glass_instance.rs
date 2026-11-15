@@ -442,9 +442,11 @@ impl Launcher {
                     .into_any_element(),
                 _ => self.auto_mark(k, loader, 42.),
             };
+            // As tall as a card whose note wraps once, so the three line up.
             let card = choice(format!("new-kind-{id}"), k == kind, &t)
                 .items_center()
                 .gap(px(14.))
+                .min_h(px(80.))
                 .p(px(12.))
                 .child(tile)
                 .child(choice_text(title, note));

@@ -427,6 +427,7 @@ impl Launcher {
             self.content_scroll.handle.clone(),
         );
         let total = self.mods.results.len();
+        let refreshing = self.mods.refreshing;
         let row = |i: usize| {
             let p = self.mods.results[i].clone();
             let icon = self.mods_icon(&p, 40.);
@@ -554,11 +555,11 @@ impl Launcher {
                 cx.notify();
             }))
         };
-        let mut list =
-            div()
-                .flex()
-                .flex_col()
-                .child(rows.column(&scroll, total, 0., |_| false, row));
+        let mut list = div()
+            .flex()
+            .flex_col()
+            .when(refreshing, |d| d.opacity(0.45))
+            .child(rows.column(&scroll, total, 0., |_| false, row));
         if self.mods.more {
             let searching = self.mods.searching;
             let offset = self.mods.results.len();

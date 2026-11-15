@@ -80,6 +80,8 @@ pub(super) struct Mods {
     /// Which search is the current one; answers for older ones are dropped.
     search: u64,
     searching: bool,
+    /// A new list is on its way to replace the rows shown, which dim meanwhile.
+    refreshing: bool,
     searched: bool,
     results: Vec<Project>,
     results_list: cull::Cull,
@@ -197,6 +199,7 @@ impl Mods {
             everything: false,
             search: 0,
             searching: false,
+            refreshing: false,
             searched: false,
             results: Vec::new(),
             results_list: cull::Cull::default(),
@@ -388,6 +391,7 @@ impl Launcher {
                 }
                 Event::Found(search, offset, result) if search == m.search => {
                     m.searching = false;
+                    m.refreshing = false;
                     m.searched = true;
                     match result {
                         Ok(found) => {
@@ -507,6 +511,7 @@ impl Launcher {
         let m = &mut self.mods;
         m.search += 1;
         m.searching = true;
+        m.refreshing = offset == 0 && keep;
         if offset == 0 {
             if !keep {
                 m.results.clear();

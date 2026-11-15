@@ -14,23 +14,55 @@ use std::sync::Mutex;
 /// How long a line stays (`setTimeout(…, 4200)`).
 const SHOWN: Duration = Duration::from_millis(4200);
 
+/// A line's pieces: the words, and a path or command (`true`) set in mono.
+type Parts = Vec<(String, bool)>;
+
 /// The line, when it was said, and its number (a new one restarts the 4.2 s).
-static LINE: Mutex<Option<(String, Instant, u64)>> = Mutex::new(None);
+static LINE: Mutex<Option<(Parts, Instant, u64)>> = Mutex::new(None);
+
+fn say_parts(parts: Parts) {
+    let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
+    let n = line.as_ref().map_or(1, |l| l.2 + 1);
+    *line = Some((parts, Instant::now(), n));
+}
 
 /// Says `text` now, in place of whatever was said before.
 pub(super) fn say(text: impl Into<String>) {
-    let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
-    let n = line.as_ref().map_or(1, |l| l.2 + 1);
-    *line = Some((text.into(), Instant::now(), n));
+    say_parts(vec![(text.into(), false)]);
+}
+
+/// Says `en` translated, its one `{hole}` filled with `value` in mono, wherever the language
+/// puts it.
+pub(super) fn say_with(en: &str, value: &str) {
+    let said = tr(en);
+    let parts = match (said.find('{'), said.find('}')) {
+        (Some(a), Some(b)) if a < b => [
+            (said[..a].to_string(), false),
+            (value.to_string(), true),
+            (said[b + 1..].to_string(), false),
+        ]
+        .into_iter()
+        .filter(|(p, _)| !p.trim().is_empty())
+        .collect(),
+        _ => vec![(said.to_string(), false)],
+    };
+    say_parts(parts);
 }
 
 /// The line still showing, and its number.
-fn current() -> Option<(String, u64)> {
+fn current_parts() -> Option<(Parts, u64)> {
     let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
     if line.as_ref().is_some_and(|l| l.1.elapsed() >= SHOWN) {
         *line = None;
     }
     line.as_ref().map(|l| (l.0.clone(), l.2))
+}
+
+fn current() -> Option<(String, u64)> {
+    current_parts().map(|(parts, n)| {
+        let text: Vec<_> = parts.iter().map(|(p, _)| p.trim()).collect();
+        (text.join(" "), n)
+    })
 }
 
 /// `/Users/me/x` as `~/x`, as the mockup writes folders.
@@ -47,7 +79,7 @@ pub(super) fn tilde(path: &Path) -> String {
 /// Opens `path` in the system's file manager (or its app), and says so.
 pub(super) fn open(cx: &mut App, path: &Path) {
     cx.open_with_system(path);
-    say(trf("Opened {path}", &[("path", &tilde(path))]));
+    say_with("Opened {path}", &tilde(path));
 }
 
 impl Launcher {
@@ -78,21 +110,15 @@ impl Launcher {
         if self.window_width >= 1280. && !ui::outline() {
             return None;
         }
+        if ui::outline() {
+            return self.outline_toast();
+        }
         let (text, n) = current()?;
         let line = ui::text(13., FontWeight::NORMAL, ink::FULL)
             .relative()
             .text_color(white(ink::FULL))
             .child(text);
-        // The Outline look's toast is a small card centred over the page, as its menus are.
-        let card = if ui::outline() {
-            crate::glass::plate(horizon_theme::glass::radius::POPOVER)
-                .shadow_lg()
-                .max_w_full()
-                .px(px(16.))
-                .py(px(10.))
-        } else {
-            crate::glass::float(20.).w_full().px(px(16.)).py(px(12.))
-        };
+        let card = crate::glass::float(20.).w_full().px(px(16.)).py(px(12.));
         Some(
             div()
                 .absolute()
@@ -106,6 +132,55 @@ impl Launcher {
                     crate::motion::eased(crate::motion::POP),
                     |d, p| d.opacity(p).top(px(crate::motion::POP_RISE * (1. - p))),
                 )),
+        )
+    }
+
+    /// The Outline look's toast: an opaque card in the bottom-right corner, edged like its
+    /// plates, a tick in the accent, then the line, its path or command in mono.
+    fn outline_toast(&self) -> Option<Div> {
+        let (parts, n) = current_parts()?;
+        let mut line = div()
+            .flex()
+            .flex_wrap()
+            .items_baseline()
+            .gap_x(px(6.))
+            .min_w_0();
+        for (part, mono) in parts {
+            line = line.child(if mono {
+                ui::mono(12., ink::SOFT).child(part.trim().to_string())
+            } else {
+                ui::text(13., FontWeight::MEDIUM, ink::FULL).child(part.trim().to_string())
+            });
+        }
+        Some(
+            div()
+                .absolute()
+                .right(px(16.))
+                .bottom(px(16.))
+                .left(px(16.))
+                .flex()
+                .justify_end()
+                .child(
+                    div()
+                        .relative()
+                        .flex()
+                        .items_center()
+                        .gap(px(10.))
+                        .max_w(px(560.))
+                        .px(px(14.))
+                        .py(px(10.))
+                        .bg(ui::color(horizon_theme::glass::SCRIM))
+                        .border_1()
+                        .border_color(ui::line())
+                        .shadow_lg()
+                        .child(ui::icon("tick-02", 16., ui::color(ui::look().accent)).flex_none())
+                        .child(line)
+                        .with_animation(
+                            ElementId::named_usize("toast", n as usize),
+                            crate::motion::eased(crate::motion::POP),
+                            |d, p| d.opacity(p).top(px(crate::motion::POP_RISE * (1. - p))),
+                        ),
+                ),
         )
     }
 }

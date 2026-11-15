@@ -225,7 +225,7 @@ impl Launcher {
                         .to_uppercase(),
                     )
                     .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
-                        this.start_sign_in();
+                        this.sign_in_from_topbar();
                         cx.notify();
                     })),
                 &t,

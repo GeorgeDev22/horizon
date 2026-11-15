@@ -54,6 +54,7 @@ impl Launcher {
             .mt(px(24.))
             .flex()
             .items_center()
+            .flex_wrap()
             .justify_center()
             .gap(px(8.))
             .children(java.is_none().then(|| self.glass_picker(cx)))

@@ -2030,6 +2030,13 @@ impl Launcher {
         self.begin_sign_in(None);
     }
 
+    /// The top bar's sign-in: its code, progress and problems show on Settings' Account card.
+    fn sign_in_from_topbar(&mut self) {
+        self.start_sign_in();
+        self.go(Page::Settings);
+        self.settings_pane.scroll_to_top_of_item(0);
+    }
+
     fn re_sign_in(&mut self, uuid: &str) {
         if let Some(account) = self.accounts.find(uuid).cloned() {
             self.begin_sign_in(Some(account));
@@ -2334,7 +2341,7 @@ fn button(
 /// (`horizon_launcher::desktop_seams`).
 fn copy_to_clipboard(cx: &mut App, item: gpui::ClipboardItem) {
     match item.text() {
-        Some(text) => glass_toast::say(trf("Copied {text}", &[("text", &text)])),
+        Some(text) => glass_toast::say_with("Copied {text}", &text),
         None => glass_toast::say(tr("Copied the picture")),
     }
     if let Some(file) = horizon_launcher::desktop_seams::clipboard_file() {
@@ -5785,7 +5792,7 @@ fn main() {
             cx.open_window(
                 WindowOptions {
                     window_bounds: Some(WindowBounds::Windowed(bounds)),
-                    window_min_size: Some(size(px(960.), px(600.))),
+                    window_min_size: Some(size(px(800.), px(600.))),
                     titlebar: Some(titlebar::options()),
                     #[cfg(target_os = "linux")]
                     window_decorations: Some(gpui::WindowDecorations::Client),
