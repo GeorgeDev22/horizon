@@ -50,20 +50,24 @@ impl Launcher {
             None => self.glass_no_server(cx),
         };
         let status = self.servers.status();
+        // Narrow, the list goes under the server instead of squeezing it.
+        let stacked = self.window_width < crate::glass_home::SIDE_BY_SIDE;
         let side = div()
             .flex()
             .flex_col()
             .flex_none()
-            .w(px(SIDE))
+            .when(stacked, |d| d.w_full())
+            .when(!stacked, |d| d.w(px(SIDE)))
             .gap(px(10.))
             .child(self.glass_server_list(cx))
             .children(open.is_some().then(|| self.glass_addresses(&status, cx)));
         let mut page = div().flex().flex_col().child(head).child(
             div()
                 .flex()
+                .when(stacked, |d| d.flex_col())
                 .items_start()
                 .gap(px(10.))
-                .child(main.flex_1().min_w_0())
+                .child(main.flex_1().min_w_0().when(stacked, |d| d.w_full()))
                 .child(side),
         );
         // Sculk's banner right under the server, where it is seen without scrolling past the

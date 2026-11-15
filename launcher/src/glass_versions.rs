@@ -145,8 +145,10 @@ impl Launcher {
         };
         let sponsor = (!self.links.sponsor.is_empty()).then(|| {
             let url = self.links.sponsor.clone();
+            // Narrow, the button goes under the words instead of out of the card.
             crate::glass::plate(radius::PANEL)
                 .flex()
+                .flex_wrap()
                 .items_center()
                 .justify_between()
                 .gap(px(16.))
@@ -156,6 +158,8 @@ impl Launcher {
                     div()
                         .flex()
                         .flex_col()
+                        .flex_1()
+                        .min_w(px(240.))
                         .gap(px(4.))
                         .child(
                             ui::text(16., FontWeight::SEMIBOLD, ink::FULL)

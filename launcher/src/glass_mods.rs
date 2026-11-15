@@ -445,6 +445,10 @@ impl Launcher {
                     tr("Checking…")
                 } else if busy {
                     tr("Installing…")
+                } else if p.kind == PackKind::Modpack
+                    && self.window_width < crate::glass_home::SIDE_BY_SIDE
+                {
+                    tr("Import")
                 } else if p.kind == PackKind::Modpack {
                     tr("Import as an instance")
                 } else {

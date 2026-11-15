@@ -798,10 +798,13 @@ impl Launcher {
                     .min_w_0()
                     .text_color(ui::danger())
                     .child(e),
+                // Narrow, the folder would show as a few cut letters: it's left out.
                 None => ui::text(13., FontWeight::NORMAL, ink::FAINT)
                     .min_w_0()
                     .truncate()
-                    .child(place),
+                    .when(self.window_width >= crate::glass_home::SIDE_BY_SIDE, |d| {
+                        d.child(place)
+                    }),
             })
             .child(buttons.flex_none())
     }

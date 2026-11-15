@@ -571,12 +571,17 @@ pub fn menu_row(
 /// material beside them), round at 16 with 6 px around its rows, a shadow setting it above the
 /// card under it.
 pub fn popover(width: f32) -> Div {
-    crate::glass::plate(radius::POPOVER)
-        .shadow_lg()
-        .w(px(width))
-        .p(px(POPOVER_PADDING))
-        .flex()
-        .flex_col()
+    // The Outline look's plates let the page through; a menu over it is near opaque.
+    if outline() {
+        crate::glass::float(radius::POPOVER)
+    } else {
+        crate::glass::plate(radius::POPOVER)
+    }
+    .shadow_lg()
+    .w(px(width))
+    .p(px(POPOVER_PADDING))
+    .flex()
+    .flex_col()
 }
 
 /// What a dialog or the palette lays over the launcher (`bg-[#07050f]/50 backdrop-blur-xl`):
