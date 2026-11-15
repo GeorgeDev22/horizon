@@ -48,7 +48,7 @@ impl Launcher {
         let head = div()
             .flex_none()
             .size(px(80.))
-            .rounded(px(20.))
+            .rounded(px(crate::glass_ui::rad(20.)))
             .overflow_hidden()
             .child(
                 self.profile_heads

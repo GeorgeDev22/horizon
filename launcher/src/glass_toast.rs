@@ -17,13 +17,41 @@ const SHOWN: Duration = Duration::from_millis(4200);
 /// A line's pieces: the words, and a path or command (`true`) set in mono.
 type Parts = Vec<(String, bool)>;
 
-/// The line, when it was said, and its number (a new one restarts the 4.2 s).
-static LINE: Mutex<Option<(Parts, Instant, u64)>> = Mutex::new(None);
+/// The line showing: its pieces, when its 4.2 s started (moved on by the time it was held
+/// under the pointer), its number (a new one restarts them), and since when it's held.
+struct Line {
+    parts: Parts,
+    since: Instant,
+    n: u64,
+    held: Option<Instant>,
+}
+
+static LINE: Mutex<Option<Line>> = Mutex::new(None);
 
 fn say_parts(parts: Parts) {
     let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
-    let n = line.as_ref().map_or(1, |l| l.2 + 1);
-    *line = Some((parts, Instant::now(), n));
+    let n = line.as_ref().map_or(1, |l| l.n + 1);
+    *line = Some(Line {
+        parts,
+        since: Instant::now(),
+        n,
+        held: None,
+    });
+}
+
+/// The pointer is on the toast (its time stops) or left it (its time goes on).
+fn hold(on: bool) {
+    let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(l) = line.as_mut() {
+        match (on, l.held) {
+            (true, None) => l.held = Some(Instant::now()),
+            (false, Some(from)) => {
+                l.since += from.elapsed();
+                l.held = None;
+            }
+            _ => {}
+        }
+    }
 }
 
 /// Says `text` now, in place of whatever was said before.
@@ -57,10 +85,13 @@ fn dismiss() {
 /// The line still showing, and its number.
 fn current_parts() -> Option<(Parts, u64)> {
     let mut line = LINE.lock().unwrap_or_else(|e| e.into_inner());
-    if line.as_ref().is_some_and(|l| l.1.elapsed() >= SHOWN) {
+    if line
+        .as_ref()
+        .is_some_and(|l| l.held.is_none() && l.since.elapsed() >= SHOWN)
+    {
         *line = None;
     }
-    line.as_ref().map(|l| (l.0.clone(), l.2))
+    line.as_ref().map(|l| (l.parts.clone(), l.n))
 }
 
 fn current() -> Option<(String, u64)> {
@@ -166,8 +197,8 @@ impl Launcher {
                 .flex()
                 .justify_end()
                 .child(
-                    // Under the pointer it's edged brighter and takes the hover from the page
-                    // under it; a click lets it go.
+                    // Under the pointer it's edged brighter, takes the hover from the page under
+                    // it and stays; a click lets it go.
                     div()
                         .id("toast")
                         .occlude()
@@ -178,12 +209,16 @@ impl Launcher {
                         .max_w(px(560.))
                         .px(px(14.))
                         .py(px(10.))
-                        .bg(ui::color(horizon_theme::glass::SCRIM))
+                        .bg(ui::color(crate::glass::panel()))
                         .border_1()
                         .border_color(ui::line())
                         .hover(|s| s.border_color(white(0.4)))
                         .cursor_pointer()
                         .shadow_lg()
+                        .on_hover(|on, window, _| {
+                            hold(*on);
+                            window.refresh();
+                        })
                         .on_click(|_, window, _| {
                             dismiss();
                             window.refresh();

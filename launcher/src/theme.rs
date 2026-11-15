@@ -74,8 +74,6 @@ pub struct Theme {
     pub on_face: Hsla,
     /// The night look's own tokens (the sky, plates with their opacity), for rebuilt screens.
     pub night: Night,
-    /// The accent this look was built from, before the glass look's mixes.
-    pub accent_choice: Accent,
     pub dark: bool,
     /// Whether the pages draw the redesign's glass look: both appearances do (light with ink
     /// for white and light plates, `glass_ui::light`).
@@ -128,16 +126,10 @@ impl Theme {
             self.night.sky = picked.sky;
             return self;
         };
-        let night = if self.dark { *dark } else { *light };
-        let accent = self.accent_choice;
-        // A theme with its own palette draws the square, solid Blocks look: no glass plates, no
-        // rounded corners. The glass look's own colours stay the mockup's violet ones.
-        let mut themed = Self::from(accent.apply(night.blocks()), night, accent);
-        themed.look = tokens::glass::Glass::new(accent.rgb(), self.look.tint, self.look.blur);
-        if !themed.dark {
-            themed.look = light_look(themed.look);
-        }
-        themed
+        // A theme with its own palette draws the same look as the others, over its own sky
+        // and plates (`glass::set_panel` takes its card colour).
+        self.night = if self.dark { *dark } else { *light };
+        self
     }
 
     /// The glass look with the player's Glass (how much white the plates take, 0 to 1) and Blur
@@ -157,7 +149,7 @@ impl Theme {
         );
         let dark = pinned_dark(choice).unwrap_or(system_dark);
         let night = if dark { night::NIGHT } else { night::DAWN };
-        Self::from(accent.apply(night.blocks()), night, accent).glass(accent)
+        Self::from(accent.apply(night.blocks()), night).glass(accent)
     }
 
     /// The dark appearance draws the glass look ("Glass" in `docs/design-system.md`): what the
@@ -203,13 +195,12 @@ impl Theme {
             face_lip: none,
             on_face: c(look.on_accent),
             look,
-            accent_choice: accent,
             glass: true,
             ..self
         }
     }
 
-    fn from(p: tokens::Blocks, night: Night, accent: Accent) -> Self {
+    fn from(p: tokens::Blocks, night: Night) -> Self {
         Self {
             look: tokens::glass::Glass::default_look(),
             page: c(p.page),
@@ -239,7 +230,6 @@ impl Theme {
             face_lip: c(p.face_lip),
             on_face: c(p.on_face),
             night,
-            accent_choice: accent,
             dark: p.dark,
             glass: false,
         }
@@ -256,10 +246,10 @@ mod tests {
     use horizon_launcher::backend::{Appearance, Settings};
     use horizon_launcher::themes::Accent;
 
-    /// Nord asks for the solid, square Blocks look: no glass, and its own polar-night palette
-    /// with the frost accent rather than Horizon's violet glass colours.
+    /// Nord draws the same look as every theme, over its own polar-night palette, in the frost
+    /// accent rather than Horizon's violet.
     #[test]
-    fn a_palette_theme_is_solid_and_square() {
+    fn a_palette_theme_keeps_the_look_in_its_colours() {
         let settings = Settings {
             appearance: Appearance::Dark,
             accent: Accent::from_rgb(0x88c0d0),
@@ -267,11 +257,11 @@ mod tests {
             ..Settings::default()
         };
         let theme = from_settings(&settings, WindowAppearance::Dark);
-        assert!(!theme.glass, "Nord draws the blocks look");
+        assert!(theme.glass, "Nord draws the same look as the other themes");
         assert!(theme.dark);
         assert_eq!(theme.night.page, 0x2e3440);
-        assert_eq!(theme.night.accent, 0x88c0d0);
-        assert_eq!(theme.accent_choice.rgb(), 0x88c0d0);
+        assert_eq!(theme.night.card, 0x3b4252);
+        assert_eq!(theme.look.accent, 0x88c0d0);
     }
 
     /// `top` at `alpha` over `under`, as the GPU blends them.

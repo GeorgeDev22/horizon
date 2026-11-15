@@ -506,7 +506,7 @@ impl Launcher {
                 div()
                     .flex_none()
                     .size(px(40.))
-                    .rounded(px(8.))
+                    .rounded(px(crate::glass_ui::rad(8.)))
                     .overflow_hidden()
                     .child(icon),
             )
@@ -710,7 +710,7 @@ impl Launcher {
                 .child(
                     div()
                         .size(px(64.))
-                        .rounded(px(12.))
+                        .rounded(px(crate::glass_ui::rad(12.)))
                         .overflow_hidden()
                         .child(icon),
                 )

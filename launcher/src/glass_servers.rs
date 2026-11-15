@@ -709,7 +709,10 @@ impl Launcher {
                         .flex()
                         .items_center()
                         .gap(px(12.))
-                        .child(self.head(&p.uuid, 28.).rounded(px(7.)))
+                        .child(
+                            self.head(&p.uuid, 28.)
+                                .rounded(px(crate::glass_ui::rad(7.))),
+                        )
                         .child(
                             ui::text(14., FontWeight::NORMAL, ink::FULL)
                                 .flex_1()

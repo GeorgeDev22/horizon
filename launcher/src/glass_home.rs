@@ -171,7 +171,7 @@ impl Launcher {
             Some(image) => gpui::img(image)
                 .flex_none()
                 .size(px(18.))
-                .rounded(px(5.))
+                .rounded(px(crate::glass_ui::rad(5.)))
                 .into_any_element(),
             None => div().into_any_element(),
         };

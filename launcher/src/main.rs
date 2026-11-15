@@ -5265,7 +5265,14 @@ impl Render for Launcher {
             self.theme = self.settings_theme(window);
         }
         glass_ui::set_on(self.theme.glass);
-        glass_ui::set_outline(self.theme.glass && self.theme.dark && self.settings.outline());
+        glass_ui::set_outline(self.theme.glass);
+        // Horizon's own dark sky keeps the Outline plate it was drawn with; other skies take
+        // their card colour.
+        glass::set_panel(if self.theme.night.card == horizon_theme::night::NIGHT.card {
+            glass::PANEL
+        } else {
+            self.theme.night.card
+        });
         glass_ui::set_light(!self.theme.dark);
         glass::set_light(!self.theme.dark);
         self.look = self.theme.look;

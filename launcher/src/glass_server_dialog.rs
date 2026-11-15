@@ -334,7 +334,7 @@ impl Launcher {
                     .w(px(64.))
                     .h(px(40.))
                     .overflow_hidden()
-                    .rounded(px(8.))
+                    .rounded(px(crate::glass_ui::rad(8.)))
                     .bg(white(fill::BUTTON))
                     .when(icon.is_file(), |d| {
                         d.child(img(icon).size_full().object_fit(gpui::ObjectFit::Cover))
@@ -584,14 +584,16 @@ impl Launcher {
         let mut chips = div().mt(px(12.)).flex().flex_wrap().gap(px(8.));
         for (i, name) in friends.iter().enumerate() {
             let face = match &own {
-                Some((n, uuid)) if n == name => self.head(uuid, 30.).rounded(px(8.)),
+                Some((n, uuid)) if n == name => {
+                    self.head(uuid, 30.).rounded(px(crate::glass_ui::rad(8.)))
+                }
                 _ => div()
                     .flex()
                     .flex_none()
                     .items_center()
                     .justify_center()
                     .size(px(30.))
-                    .rounded(px(8.))
+                    .rounded(px(crate::glass_ui::rad(8.)))
                     .bg(white(fill::BUTTON))
                     .child(ui::icon("user", 16., white(ink::BODY))),
             };

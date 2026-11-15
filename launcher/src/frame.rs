@@ -686,10 +686,14 @@ impl Launcher {
                 .when(!open, |d| d.hover(|s| s.bg(white(0.09))))
                 .cursor_pointer()
                 .child(
-                    div().size(px(26.)).rounded(px(7.)).overflow_hidden().child(
-                        self.profile_heads
-                            .draw(face.as_deref(), 26., self.scale, &t),
-                    ),
+                    div()
+                        .size(px(26.))
+                        .rounded(px(crate::glass_ui::rad(7.)))
+                        .overflow_hidden()
+                        .child(
+                            self.profile_heads
+                                .draw(face.as_deref(), 26., self.scale, &t),
+                        ),
                 )
                 .child(
                     div()
@@ -855,7 +859,7 @@ impl Launcher {
                             div()
                                 .relative()
                                 .size(px(30.))
-                                .rounded(px(8.))
+                                .rounded(px(crate::glass_ui::rad(8.)))
                                 .overflow_hidden()
                                 .child(self.profile_heads.draw(
                                     Some(who.as_str()),

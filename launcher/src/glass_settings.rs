@@ -364,7 +364,7 @@ impl Launcher {
             .items_center()
             .justify_center()
             .size(px(42.))
-            .rounded(px(11.))
+            .rounded(px(crate::glass_ui::rad(11.)))
             .bg(white(0.08))
             .child(ui::icon("computer", 21., white(0.8)))
             .into_any_element();
@@ -438,7 +438,6 @@ impl Launcher {
                 d.child(self.look_slider_row(themes_page::LookKnob::Glass, cx))
                     .child(self.look_slider_row(themes_page::LookKnob::Blur, cx))
             })
-            .child(self.outline_row(cx))
             .child(self.performance_row(cx))
             .child(self.home_background_row(cx))
             .child(self.language_row(cx))

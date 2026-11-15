@@ -166,7 +166,7 @@ fn icon_choice(id: impl Into<SharedString>, on: bool, t: &Theme) -> Stateful<Div
             .items_center()
             .justify_center()
             .size(px(52.))
-            .rounded(px(15.))
+            .rounded(px(crate::glass_ui::rad(15.)))
             .cursor_pointer()
             .when(on, |d| d.bg(white(0.16)))
             .when(!on, |d| d.hover(|s| s.bg(white(0.07)))),
@@ -436,7 +436,7 @@ impl Launcher {
                     .items_center()
                     .justify_center()
                     .size(px(42.))
-                    .rounded(px(11.))
+                    .rounded(px(crate::glass_ui::rad(11.)))
                     .bg(white(fill::BUTTON))
                     .child(ui::icon("puzzle", 21., white(0.85)))
                     .into_any_element(),

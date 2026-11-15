@@ -19,8 +19,23 @@ use std::sync::Arc;
 
 /// Logical pixels per texel of a plate's piece of backdrop.
 const PIECE: f32 = 4.;
-/// The Outline look's flat plate, under its 1 px line.
-const PANEL: u32 = 0x100d22;
+/// The Outline look's flat plate under Horizon's dark sky, under its 1 px line.
+pub const PANEL: u32 = 0x100d22;
+
+thread_local! {
+    /// The flat plate's colour for the theme and appearance shown ([`set_panel`]).
+    static OUTLINE_PANEL: std::cell::Cell<u32> = const { std::cell::Cell::new(PANEL) };
+}
+
+/// Set as each frame starts: the theme's card colour, so plates match its sky.
+pub fn set_panel(c: u32) {
+    OUTLINE_PANEL.set(c);
+}
+
+/// The Outline look's plate colour now.
+pub fn panel() -> u32 {
+    OUTLINE_PANEL.get()
+}
 
 /// A plate's kind: `.hzl-glass` (panels, the sidebar, dialogs) or `.hzl-float` (menus and
 /// popovers: twice the blur, darker).
@@ -180,7 +195,7 @@ pub fn backdrop(kind: Kind, radius: f32) -> AnyElement {
             .top_0()
             .left_0()
             .size_full()
-            .bg(rgb(PANEL).opacity(if kind == Kind::Float { 0.96 } else { 0.78 }))
+            .bg(rgb(panel()).opacity(if kind == Kind::Float { 0.96 } else { 0.78 }))
             .border_1()
             .border_color(crate::glass_ui::line())
             .into_any_element();
