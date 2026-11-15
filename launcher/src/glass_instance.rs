@@ -468,7 +468,7 @@ impl Launcher {
                     .flex()
                     .items_center()
                     .gap(px(10.))
-                    .h(px(40.))
+                    .h(px(48.))
                     .px(px(8.))
                     .rounded(px(crate::glass_ui::rad(radius::CONTROL)))
                     .cursor_pointer()
@@ -494,6 +494,8 @@ impl Launcher {
             .w(px(340.))
             .h_full()
             .p(px(28.))
+            // Import sits on the foot's line: the foot's 20 px under 48 px buttons.
+            .pb(px(20.))
             .overflow_y_scroll()
             .rounded_l(px(crate::glass_ui::rad(radius::MODAL)))
             .bg(white(0.035))
