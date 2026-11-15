@@ -134,13 +134,12 @@ Geist (400, 500, 600) and Geist Mono (400), bundled under the SIL Open Font Lice
 
 ## Surfaces
 
-- **Launcher** (`launcher/`): moving to the Night look below, screen by screen; screens not rebuilt
-  yet draw the Blocks parts in the night's colours (`Night::blocks`). A top bar (wordmark, the pages as
-  tabs, the account chip, Settings), a sidebar (the instances, the hosted servers, the launcher's
-  own version and channel at its foot), and the page over a stone texture. Home opens on a pixel
-  landscape banner with the hero, the version picker and Play; Mods holds the mod, resource pack
-  and modpack tabs; Versions and Patch notes are lists of panels; Settings is
-  grouped panels of rows. Dark by default, Light or System in Settings (Appearance).
+- **Launcher** (`launcher/`): the Outline look below, for every launcher theme. A top bar (the
+  mark, the pages, the players count, the account, Settings), a sidebar (the instances, the hosted
+  servers, the partner card, Discord, Sponsor, Website and the launcher's version at its foot), and
+  the page over the pixel scene. Home centres the instance and Play over the sun; Mods holds the
+  mod, modpack, resource, shader and data pack tabs; Versions lists panels; Settings is grouped
+  panels of rows. Dark by default, Light or System in Settings (Appearance).
 - **Website** (horizon-rust/horizon-site): the Blocks look below. The same page structure as before (what it
   is, screenshots, parity, launcher, patch notes, community), headings in Pixelify Sans, lists as
   stacks of panels, the stone texture behind the page and Horizon's pixel landscape (a dawn or a
@@ -153,8 +152,8 @@ Geist (400, 500, 600) and Geist Mono (400), bundled under the SIL Open Font Lice
 
 ## Blocks
 
-A blocky, Minecraft-like look in Horizon's purple, for the website, the redesigned launcher and
-the game's graphics, controller, Extras and Shaders settings screens:
+A blocky, Minecraft-like look in Horizon's purple, for the website and the game's graphics,
+controller, Extras and Shaders settings screens (the launcher drew it once; it draws Outline now):
 Minecraft's inventory rather than a document. Its colours are `horizon_theme::Blocks`
 (`BLOCKS_LIGHT`, `BLOCKS_DARK`), which `tokens.css` carries under the same names as before plus
 `--panel`, `--raised`, `--button`, `--well`, `--bevel`, `--lip`, `--outline` and the `--face`
@@ -309,7 +308,8 @@ Light); `tokens.css` carries them as `--night-*`. The game's menus don't use it.
 
 ## Glass
 
-The launcher's next look, designed by Anthony S. (dezer-x) as a web mockup: playhorizon.dev/launcher,
+The launcher's pages and parts, drawn today as Outline (below), which squares and flattens them.
+Designed by Anthony S. (dezer-x) as a web mockup: playhorizon.dev/launcher,
 source in horizon-site `app/launcher/` and `components/launcher/`. The launcher ports it one to one,
 screen by screen, replacing Night where they differ; the mockup is the reference for every size,
 colour, state and motion. Its tokens are `horizon_theme::glass`; `tokens.css` carries the colours
@@ -319,7 +319,7 @@ as `--glass-*`.
   meteor now and then and fireflies (`launcher/src/scene.rs`), a port of the website's
   `HorizonScene` with its seeds and sums, so a window shows the picture the mockup shows at the
   same size. It eases with the pointer and stops 10 s after the window loses focus;
-  `HORIZON_LAUNCHER_MOTION` works as for Night. Dark appearance only so far; Light keeps the dawn.
+  `HORIZON_LAUNCHER_MOTION` works as for Night. Light draws the dawn; a launcher theme its own sky.
 - **Frosted plates, round corners, no borders.** A plate is the scene behind it blurred 24 px and
   saturated 140 %, under white at 6 % and the accent's dark violet (`base`) at 22 %. Menus and
   popovers take the same glass with a shadow (the mockup's darker `hzl-float` read as another
@@ -343,6 +343,53 @@ as `--glass-*`.
   `Bricolage Grotesque Heading` (28), cut by `tools/bake_bricolage.py`.
 - **Icons**: Hugeicons' free set (MIT), the ones the mockup uses, stroked 1.6 in the text colour
   (`crates/horizon-theme/icons/glass/`, served as `icons/glass/<name>.svg`).
+
+## Outline
+
+The launcher's look now: Glass's pages and parts, drawn flat and square. It is the only look, for
+every launcher theme (Horizon, First Light, Nord) in both appearances; there is no switch for it.
+A theme changes colours, never layout. `glass_ui::outline()` is on whenever the glass parts are,
+and Glass above still holds for everything this section doesn't change.
+
+- **Square, flat, edged.** Corners are square: every radius goes through `glass_ui::rad`, which
+  gives 0, so a corner written as a bare number is a bug. A plate is the theme's flat panel colour
+  under a 1 px `glass_ui::line()` (white at 12 %, ink in light), no blur, no glass, no shadow.
+- **Panels in the theme's colour** (`glass::set_panel`, set each frame): Horizon's dark sky keeps
+  `glass::PANEL` (`#100d22`); every other sky takes its own `Night::card` (dawn `#fdfcff`, Nord
+  `#3b4252`). Page plates draw it at 78 %; menus and popovers (`ui::popover`) at 96 %, so nothing
+  under a menu reads through it.
+- **Mono labels.** Section labels, statuses and counts are Geist Mono, upper case
+  (`glass_ui::mono`): "INSTANCES", "2,349 PLAYING NOW", "NEEDS PREPARING · 99 ON THE OFFICIAL SMP".
+- **The top bar** (`launcher/src/outline_frame.rs`): the mark and "Horizon" on the left, the pages as
+  text centred on the window with a 2 px line under the open one (another page's fades in faintly
+  under the pointer), then the players count, the account and Settings on the right. Widths are
+  measured in the language shown, never guessed. As the window narrows, in this order: the pages
+  leave the window's centre for the room between brand and buttons; the players count goes; Sign in
+  with Microsoft becomes "Sign in" (the logo stays); the word "Horizon" goes, then the mark; only
+  then do the pages scroll sideways. The pages are the last thing to give up room.
+- **Sign in** in the top bar opens the sign-in sheet at once (Night's "The sign-in sheet"), not a
+  page that leads to it.
+- **Home** (`launcher/src/outline_home.rs`): the edition tabs, the instance's name at 88 px, then
+  Version, Play and the folder in one row centred on the window, the status in mono under them, the
+  invite code, and "Jump back in" (recent worlds, a saved server, the newest notes) at the foot of
+  the first screen; the instance's tabs are a scroll below. The row wraps rather than overflows on a
+  narrow window. Hovering the folder slides its ⋯ out over the space beside it: nothing in the row
+  moves.
+- **Toasts** (`launcher/src/glass_toast.rs`): an opaque card in the panel colour, bottom right, as
+  wide as its words (at most 560 px), a tick in the accent, then the line; a path or command in it is
+  set in mono ("Copied" `horizon-launcher play --instance horizon`), wherever the language puts it.
+  Under the pointer its edge brightens and it takes the hover from what is beneath; its 4.2 s stop
+  while it is held and go on after; a click lets it go. Never in the top bar, where the pages sit.
+- **Lists that wait** keep their rows on screen until the new ones arrive, dimmed to 45 % meanwhile
+  (Mods' works-on and show-everything switches, its Horizon/Modrinth tabs): never an empty
+  "Searching…" frame between two lists.
+- **Narrow windows.** The window is at least 800 wide, so it fits a half-screen column. Under
+  `SIDE_BY_SIDE` (1200) side-by-side layouts stack (the Servers page's list goes under the server)
+  and long labels shorten ("Import as an instance" → "Import"); a line that would show as a few cut
+  letters is left out rather than truncated. Under `COMPACT` (1180) Settings' sections become one
+  row that scrolls sideways above the page instead of a column beside it. A card's button wraps
+  under its words instead of leaving the card. Words under a row start at its title's edge and wrap
+  inside the card.
 
 ## The mark
 
